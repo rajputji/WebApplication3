@@ -13,7 +13,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Inventory System</title>
+        <title>Stock Management System</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.6 -->
@@ -86,7 +86,7 @@
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img src="../../Image/logo.png" class="user-image" alt="User Image">
-                                    <span class="hidden-xs"> Optimus Prime</span>
+                                    <span class="hidden-xs">Grocery Shop</span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
@@ -95,8 +95,7 @@
 
                                         <p>
                                              <i style="font-size: 18px"><%=session.getAttribute("userid")%></i><br>
-                                            Optimus Prime - Web Developer
-                                            <small>Member since 2016</small>
+                                           
                                         </p>
                                     </li>
 
@@ -127,7 +126,7 @@
                             <img src="../../Image/logo.png" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
-                            <p>Optimus Prime</p>
+                            <p>Grocery Shop/p>
 
                         </div>
                     </div>
@@ -239,19 +238,19 @@
                     <table>
                         <tr> 
                             <td><div class="form-group">
-                                    <label for="user_id">Staff Id:</label><br>
-                                    <input type="text" class="form-control" id="user_id" name="staff_id" placeholder="Enter Your User Id">
+                                    <label for="staff_id">Staff Id:</label><br>
+                                    <input type="text" class="form-control" id="staff_id" name="staff_id" placeholder="Enter Your Staff Id" required>
                                 </div><br></td>
                             <td><div class="form-group">
                                     <label for="password">Password:</label><br>
-                                    <input type="text" class="form-control" id="password" name="password" placeholder="Enter Your Password">
+                                    <input type="text" class="form-control" id="password" name="password" placeholder="Enter Your Password" required>
                                 </div><br></td>
                         </tr>
                         <tr>
                             <td>
                                 <div class="form-group">
                                     <label for="name">Name: </label><br>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter Your Name">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter Your Name" required>
                                 </div><br>
                             </td>
                             <td>
@@ -269,35 +268,25 @@
                             <td>
                                 <div class="form-group">
                                     <label for="mobile_no">Mobile No:</label><br>
-                                    <input type="text" class="form-control" id="mobile_no" name="mobile_no"  placeholder="Enter Your Mobile No">
+                                    <input type="text" class="form-control" id="mobile_no" name="mobile_no"  placeholder="Enter Your Mobile No" required>
                                 </div><br>
                             </td>
 
-                            <td>
-                                <div class="form-group">
-                                    <label for="nid">NID:</label><br>
-                                    <input type="text" class="form-control" id="nid" name="nid" placeholder="Enter Your NID">
-                                </div><br>
-                            </td>
+                            
                         </tr>
                         <tr>
-                            <td>
-                                <div class="form-group">
-                                    <label for="pre_address">Present Address:</label><br>
-                                    <textarea class="form-control" rows="3" id="pre_address" name="pre_address"></textarea>
-                                </div><br>
-                            </td>
+                          
                             <td>
                                 <div class="form-group">
                                     <label for="per_address">Permanent Address:</label><br>
-                                    <textarea class="form-control" rows="3" id="per_address" name="per_address"></textarea>
+                                    <textarea class="form-control" rows="3" id="per_address" name="per_address" required></textarea>
                                 </div><br>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <label for="category">Category:</label><br>
-                                <select class="form-control" id="category" name="category">
+                                <select class="form-control" id="category" name="category" required>
                                     <option>Select</option>
                                     <option>Salesman</option>
                                     <option>Manager</option>
@@ -307,8 +296,8 @@
                             </td>
                             <td>
                             <div class="form-group">
-                                    <label for="">Date</label><br>
-                                    <input type="date" class="form-control" id="date" name="date" >
+                                    <label for="joining_date">Date</label><br>
+                                    <input type="date" class="form-control" id="joining_date" name="joining_date" required>
                                 </div><br>
                             </td>
                         </tr>
@@ -425,10 +414,7 @@ public int nullIntconv(String str)
                                             <th>Pass</th>
                                             <th>Name</th>
                                             <th>Gender</th>
-                                            <th>Cell No</th>
-                                               <th>NID</th>
-                                            
-                                            <th>Present Adds.</th>
+                                            <th>Mobile No</th>
                                             <th>Permanent Adds.</th>
                                             <th>Category</th>                                   
                                             <th>Date</th>
@@ -451,11 +437,9 @@ public int nullIntconv(String str)
                                             <td><%=rsPagination.getString("name")%></td>
                                             <td><%=rsPagination.getString("gender")%></td>
                                             <td><%=rsPagination.getString("mobile_no")%></td>
-                                            <td><%=rsPagination.getString("nid")%></td>
-                                            <td><%=rsPagination.getString("pre_address")%></td>
                                             <td><%=rsPagination.getString("per_address")%></td>
                                             <td><%=rsPagination.getString("category")%></td>
-                                            <td><%=rsPagination.getString("date")%></td>
+                                            <td><%=rsPagination.getString("joining_date")%></td>
                                             <td>
                                                 <a href="DB/EditStaff.jsp?id=<%=rsPagination.getInt("id")%>" class="btn btn-success btn-sm">Edit</a>
   
@@ -577,7 +561,7 @@ public int nullIntconv(String str)
         <div class="pull-right hidden-xs">
 
         </div>
-        <strong>Copyright &copy; 2016-2017 <a href="">Optimus Prime</a>.</strong> The Group Of Friends
+    
     </footer>
 
     <!-- Control Sidebar -->

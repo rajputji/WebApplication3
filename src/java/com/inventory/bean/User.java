@@ -155,7 +155,7 @@ public class User {
 
 /////////////////////////for Membership//////////////////////////////////////////
     
-    private String member_id, name, password, gender, email, mobile_no, nid, per_address, pre_address, payment;
+    private String member_id, name, password, gender, email, mobile_no, per_address,payment;
 
     public String getMember_id() {
         return member_id;
@@ -205,21 +205,7 @@ public class User {
         this.mobile_no = mobile_no;
     }
 
-    public String getNid() {
-        return nid;
-    }
-
-    public void setNid(String nid) {
-        this.nid = nid;
-    }
-
-    public String getPre_address() {
-        return pre_address;
-    }
-
-    public void setPre_address(String pre_address) {
-        this.pre_address = pre_address;
-    }
+   
 
     public String getPer_address() {
         return per_address;
@@ -238,7 +224,7 @@ public class User {
     }
 
 /////////////For Staff////////////
- private String staff_id;
+ private String staff_id,joining_date;
 
 public String getStaff_id() {
 	return staff_id;
@@ -246,6 +232,16 @@ public String getStaff_id() {
 public void setStaff_id(String staff_id) {
 	this.staff_id = staff_id;
 }
+
+    public String getJoining_date() {
+        return joining_date;
+    }
+
+    public void setJoining_date(String joining_date) {
+        this.joining_date = joining_date;
+    }
+
+    
 
 /////For Sale/////////
 

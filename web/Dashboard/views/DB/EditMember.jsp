@@ -11,7 +11,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Inventory System</title>
+        <title>Stock Management System</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.6 -->
@@ -85,7 +85,7 @@
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img src="../../../Image/logo.png" class="user-image" alt="User Image">
-                                    <span class="hidden-xs"> Optimus Prime</span>
+                                    <span class="hidden-xs">Grocery Shop</span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
@@ -94,8 +94,7 @@
 
                                         <p>
                                              <i style="font-size: 18px"><%=session.getAttribute("userid")%></i><br>
-                                            Optimus Prime - Web Developer
-                                            <small>Member since 2016</small>
+                                            
                                         </p>
                                     </li>
 
@@ -126,7 +125,7 @@
                             <img src="../../../Image/logo.png" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
-                            <p>Optimus Prime</p>
+                            <p>Grocery Shop</p>
 
                         </div>
                     </div>
@@ -246,8 +245,8 @@
                             <tr>
                                 <td>
                                         <div class="form-group">
-                                            <label for="customer id">Member Id</label><br>
-                                            <input type="text" name="member_id" value="<%= u.getMember_id()%>" class="form-control" id="customer id" placeholder="Enter Your Id">
+                                            <label for="member_id">Member Id</label><br>
+                                            <input type="text" name="member_id" value="<%= u.getMember_id()%>" class="form-control" id="member_id" placeholder="Enter Your Id">
                                         </div><br>
                                         </td>
                                         <td>
@@ -259,7 +258,7 @@
                                         </td>
                                         <td>
                                             <label for="gender">Gender</label><br>
-                                            <select class="form-control" name="gender"  id="sel1">
+                                            <select class="form-control" name="gender"  id="gender">
                                                 <option><%= u.getGender() %></option>
                                                 <option>Male</option>
                                                 <option>Female</option>
@@ -267,8 +266,8 @@
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <label for="name">Password</label><br>
-                                                <input type="text" name="password" value="<%= u.getPassword()%>" class="form-control" id="name" placeholder="Enter Password">
+                                                <label for="password">Password</label><br>
+                                                <input type="text" name="password" value="<%= u.getPassword()%>" class="form-control" id="password" placeholder="Enter Password">
                                             </div><br>
                                         </td>
                             </tr>
@@ -281,28 +280,18 @@
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <label for="mobile">Mobile No.</label><br>
-                                        <input type="text" name="mobile_no" value="<%= u.getMobile_no()%>" class="form-control" id="mobile" placeholder="Enter Mobile No">
+                                        <label for="mobile_no">Mobile No.</label><br>
+                                        <input type="text" name="mobile_no" value="<%= u.getMobile_no()%>" class="form-control" id="mobile_no" placeholder="Enter Mobile No">
                                     </div><br>
                                 </td>
-                                <td>
-                                    <div class="form-group">
-                                        <label for="">NID</label><br>
-                                        <input type="text" name="nid" value="<%= u.getNid()%>" class="form-control" id="mobile" placeholder="Enter National Id">
-                                    </div><br>
-                                </td>
+                               
                             </tr>
                             <tr> 
+                               
                                 <td>
                                     <div class="form-group">
-                                        <label for="address">Present Address</label><br>
-                                        <textarea class="form-control" name="pre_address" rows="4" id="address"><%= u.getPre_address()%></textarea>
-                                    </div><br>
-                                </td>
-                                <td>
-                                    <div class="form-group">
-                                        <label for="address">Permanent Address</label><br>
-                                        <textarea class="form-control" name="per_address" rows="4" id="address"><%= u.getPer_address()%></textarea>
+                                        <label for="per_address">Permanent Address</label><br>
+                                        <textarea class="form-control" name="per_address" rows="4" id="per_address"><%= u.getPer_address()%></textarea>
                                     </div><br>
                                 </td>
                            </tr>
@@ -310,14 +299,14 @@
                                 <td>
 
                                     <div class="form-group">
-                                        <label for="mobile">Payment Amount(TK)</label><br>
-                                        <input type="text" name="payment" value="<%= u.getPayment()%>" class="form-control" id="mobile" placeholder="Enter Payment">
+                                        <label for="payment">Payment Amount(TK)</label><br>
+                                        <input type="text" name="payment" value="<%= u.getPayment()%>" class="form-control" id="payment" placeholder="Enter Payment">
                                     </div><br>
                                 </td>
                                 <td>
 
-                                    <label for="">Category</label><br>
-                                    <select class="form-control" name="category" value="<%= u.getCategory()%>" id="sel1">
+                                    <label for="category">Category</label><br>
+                                    <select class="form-control" name="category" value="<%= u.getCategory()%>" id="category">
                                         <option><%= u.getCategory()%></option>
                                         <option>Premium</option>
                                         <option>Sliver</option>
@@ -327,8 +316,8 @@
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <label for="mobile">Date</label><br>
-                                        <input type="date" name="date" value="<%= u.getDate()%>" class="form-control" id="mobile">
+                                        <label for="date">Date</label><br>
+                                        <input type="date" name="date" value="<%= u.getDate()%>" class="form-control" id="date">
                                     </div><br>
                                 </td>
                             </tr>
@@ -375,7 +364,7 @@
                 <div class="pull-right hidden-xs">
 
                 </div>
-                <strong>Copyright &copy; 2016-2017 <a href="#">Optimus Prime</a>.</strong> The Group Of Friends
+                
             </footer>
 
             <!-- Control Sidebar -->

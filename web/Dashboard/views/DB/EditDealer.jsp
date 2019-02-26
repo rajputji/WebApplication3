@@ -13,7 +13,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Inventory System</title>
+        <title>Stock Management System</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.6 -->
@@ -87,7 +87,7 @@
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img src="../../../Image/logo.png" class="user-image" alt="User Image">
-                                    <span class="hidden-xs"> Optimus Prime</span>
+                                    <span class="hidden-xs">Grocery Shop</span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
@@ -96,8 +96,7 @@
 
                                         <p>
                                             <i style="font-size: 18px"><%=session.getAttribute("userid")%></i><br>
-                                            Optimus Prime - Web Developer
-                                            <small>Member since 2016</small>
+                                          
                                         </p>
                                     </li>
 
@@ -128,7 +127,7 @@
                             <img src="../../../Image/logo.png" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
-                            <p>Optimus Prime</p>
+                            <p>Grocery Shop</p>
 
                         </div>
                     </div>
@@ -256,13 +255,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
-                                                <div class="form-group">
-                                                    <label for="">Branch</label><br>
-                                                    <input type="text" class="form-control" value="<%= u.getBranch()%>" name="branch"  placeholder="Enter Branch">
-                                                </div>
-
-                                            </td>
+                                            
                                         </tr>
                                         <tr>
                                             <td>
@@ -289,22 +282,8 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr> 
-                                            <td>
-                                                <div class="form-group">
-                                                    <label for="">Agent Name</label><br>
-                                                    <textarea type="text" class="form-control" value="" name="agent_name" id="customer id" placeholder=""><%= u.getAgent_name()%></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr> 
-                                            <td>
-                                                <div class="form-group">
-                                                    <label for="">Agent Contact</label><br>
-                                                    <textarea type="text" class="form-control" value="" name="agent_contact" id="customer id" placeholder=""><%= u.getAgent_contact()%></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                      
+                                      
                                         <tr>
                                             <td>
                                                 <div class="form-group">

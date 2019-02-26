@@ -9,7 +9,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Inventory System</title>
+        <title>Stock Management System</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.6 -->
@@ -83,7 +83,7 @@
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img src="../../Image/logo.png" class="user-image" alt="User Image">
-                                    <span class="hidden-xs"> Optimus Prime</span>
+                                    <span class="hidden-xs">Grocery Shop</span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
@@ -92,8 +92,7 @@
 
                                         <p>
                                             <i style="font-size: 18px"><%=session.getAttribute("userid")%></i><br>
-                                            Optimus Prime - Web Developer
-                                            <small>Member since 2016</small>
+                                           
                                         </p>
                                     </li>
 
@@ -124,7 +123,7 @@
                             <img src="../../Image/logo.png" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
-                            <p>Optimus Prime</p>
+                            <p>Grocery Shop</p>
 
                         </div>
                     </div>
@@ -240,22 +239,14 @@
                                         <tr>
                                             <td>
                                                 <div class="form-group">
-                                                    <label for="customer id">Supplier Name: </label><br>
+                                                    <label for="dealer_name">Supplier Name: </label><br>
                                                     <input type="customer id" class="form-control" name="dealer_name"  placeholder="Enter Supplier Name" required>
                                                 </div>
                                             </td>
-                                            <td>
-                                                
+                                               <td>
                                                 <div class="form-group">
-                                                    <label for="">Branch</label><br>
-                                                    <input type="text" class="form-control" name="branch"  placeholder="Enter Branch" required>
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <label for="customer id">Supplier Id</label><br>
-                                                    <input type="customer id" class="form-control" name="dealer_id"  placeholder="Enter Supplier Id" required>
+                                                    <label for="dealer_id">Supplier Id</label><br>
+                                                    <input type="dealer_id" class="form-control" name="dealer_id"  placeholder="Enter Supplier Id" required>
                                                 </div>
                                             </td>
                                         </tr>
@@ -263,34 +254,24 @@
                                         <tr>
                                             <td>
                                                 <div class="form-group">
-                                                    <label for="">Supplier Contact</label><br>
+                                                    <label for="contact">Supplier Contact</label><br>
                                                     <input type="text" class="form-control" name="contact" placeholder="Enter Supplier Contact" pattern="(\+?\d[- .]*){11}" required>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <label for=""> Supplier Address </label><br>
+                                                    <label for="address"> Supplier Address </label><br>
                                                     <textarea type="text" class="form-control" name="address" id="customer id" placeholder="" required></textarea>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <label for="">Agent Name:</label><br>
-                                                    <input type="text" class="form-control" name="agent_name" placeholder="Enter Agent Name" required>
-                                                </div>
-                                            </td>
+                                           
                                         </tr>
                                         
                                         <tr>
+                                         
                                             <td>
                                                 <div class="form-group">
-                                                    <label for="">Agent Contact:</label><br>
-                                                    <input type="text" class="form-control" name="agent_contact" placeholder="Enter Agent Contact" pattern="(\+?\d[- .]*){11}"  required>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <label for="">Date</label><br>
+                                                    <label for="date">Date</label><br>
                                                     <input type="date" class="form-control" name="date" placeholder="Enter date" required>
                                                 </div>
                                             </td>
@@ -409,12 +390,11 @@
                                         <tr>
                                             <th>Serial No.</th>
                                             <th>Supplier Name</th>
-                                            <th>Branch</th>
+                                           
                                             <th>Supplier Id</th>
                                             <th>Contact</th>
                                             <th>Address</th>
-                                            <th>Agent Name</th>
-                                            <th>Agent Contact</th>
+                                           
                                             <th>Date</th>
                                             <th>Action</th>
 
@@ -430,12 +410,11 @@
                                         <tr>
                                             <td><% out.print(a); a++; %></td>
                                             <td><%=rsPagination.getString("dealer_name")%></td>
-                                            <td><%=rsPagination.getString("branch")%></td>
+                                            
                                             <td><%=rsPagination.getString("dealer_id")%></td>
                                             <td><%=rsPagination.getString("contact")%></td>
                                             <td><%=rsPagination.getString("address")%></td>
-                                            <td><%=rsPagination.getString("agent_name")%></td>
-                                            <td><%=rsPagination.getString("agent_contact")%></td>
+                                          
                                             <td><%=rsPagination.getString("date")%></td>
                                             <td>
                                                 <a href="DB/EditDealer.jsp?id=<%=rsPagination.getInt("id")%>" class="btn btn-success btn-sm" role="button">
@@ -559,7 +538,7 @@
             <div class="pull-right hidden-xs">
 
             </div>
-            <strong>Copyright &copy; 2016-2017 <a href="#">Optimus Prime</a>.</strong> The Group Of Friends
+            
         </footer>
 
         <!-- Control Sidebar -->
