@@ -297,7 +297,7 @@
      
  
      
-                String sqlPagination="SELECT SQL_CALC_FOUND_ROWS * FROM purchase limit "+iPageNo+","+iShowRows+"";
+                String sqlPagination="SELECT SQL_CALC_FOUND_ROWS * FROM product limit "+iPageNo+","+iShowRows+"";
  
                 psPagination=conn.prepareStatement(sqlPagination);
                 rsPagination=psPagination.executeQuery();
