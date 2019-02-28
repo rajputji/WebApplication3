@@ -13,7 +13,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Inventory System</title>
+        <title>Stock Management System</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.6 -->
@@ -87,7 +87,7 @@
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img src="../../Image/logo.png" class="user-image" alt="User Image">
-                                    <span class="hidden-xs"> Optimus Prime</span>
+                                    <span class="hidden-xs">Grocery Shop</span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
@@ -96,8 +96,7 @@
 
                                         <p>
                                             <i style="font-size: 18px"><%=session.getAttribute("userid")%></i><br>
-                                            Optimus Prime - Web Developer
-                                            <small>Member since 2016</small>
+                                           
                                         </p>
                                     </li>
 
@@ -128,7 +127,7 @@
                             <img src="../../Image/logo.png" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
-                            <p>Optimus Prime</p>
+                            <p>Grocery Shop</p>
 
                         </div>
                     </div>
@@ -320,16 +319,16 @@
                         <thead>
                             <tr>
                                 <th>Sl No.</th>
-                                <th>Category</th>
-                                <th>Supplier Name</th>
-                                <th>Code</th>
+                                <th>Product_ID</th>
                                 <th>Product Name</th>
+                                <th>Category</th>
+                                
+                               
                                 <th>Company Name</th>
                                 <th>Quantity</th>
                                 <th>Unit</th>
                                 <th>Per-Unit-Price</th>
-                                <th>Product-Expire-Date</th>
-                                <th>Purchase-Date</th>
+                               
                                 <th>Action</th>
 
                             </tr>
@@ -343,16 +342,15 @@
                             %>
                             <tr>
                                 <td><% out.print(a); a++; %></td>
-                                <td><%=rsPagination.getString("category")%></td>
-                                <td><%=rsPagination.getString("dealer_name")%></td>
-                                <td><%=rsPagination.getString("code")%></td>
-                                <td><%=rsPagination.getString("product_name")%></td>
-                                <td><%=rsPagination.getString("company_name")%></td>
-                                <td><%=rsPagination.getString("quantity")%></td>
-                                <td><%=rsPagination.getString("unit")%></td>
-                                <td><%=rsPagination.getString("per_unit_price")%></td>
-                                <td><%=rsPagination.getString("product_exp_date")%></td>
-                                <td><%=rsPagination.getString("purchase_date")%></td>
+                                 <td><%=rsPagination.getString("p_id")%></td>
+                                 <td><%=rsPagination.getString("p_name")%></td>
+                                <td><%=rsPagination.getString("p_category")%></td>
+                                
+                                <td><%=rsPagination.getString("p_company")%></td>
+                                <td><%=rsPagination.getString("p_quantity")%></td>
+                                <td><%=rsPagination.getString("p_unit")%></td>
+                                <td><%=rsPagination.getString("p_price")%></td>
+                               
                                 <td>
                                     <a href="DB/EditPurchase.jsp?id=<%=rsPagination.getInt("id")%>" class="btn btn-success btn-sm btn-icon icon-left" role="button">
                                         <i class="entypo-pencil"></i>
@@ -472,7 +470,7 @@
     <div class="pull-right hidden-xs">
 
     </div>
-    <strong>Copyright &copy; 2016-2017 <a href="#">Optimus Prime</a>.</strong> The Group Of Friends
+ 
 </footer>
 
 <!-- Control Sidebar -->
