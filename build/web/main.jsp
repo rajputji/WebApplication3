@@ -159,7 +159,7 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="Dashboard/views/purchase2.jsp"><i class="fa fa-circle-o"></i> Product Purchase</a></li>
+                                <li><a href="Dashboard/views/purchase.jsp"><i class="fa fa-circle-o"></i> Product Purchase</a></li>
                                 <li><a href="Dashboard/views/ProductList.jsp"><i class="fa fa-circle-o"></i> Product List</a></li>
                             </ul>
                         </li>

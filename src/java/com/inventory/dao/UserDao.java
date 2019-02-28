@@ -49,17 +49,19 @@ public class UserDao {
         try {
             Connection con = getConnection();
 
-            PreparedStatement ps1 = con.prepareStatement("update purchase set category=?,code=?,product_name=?,company_name=?,quantity=?,unit=?,per_unit_price=?,product_exp_date=?,purchase_date=? where id=?");
-            ps1.setString(1, u.getCategory());
-            ps1.setString(2, u.getCode());
-            ps1.setString(3, u.getProduct_name());
-            ps1.setString(4, u.getCompany_name());
-            ps1.setString(5, u.getQuantity());
-            ps1.setString(6, u.getUnit());
-            ps1.setString(7, u.getPer_unit_price());
-            ps1.setString(8, u.getProduct_exp_date());
-            ps1.setString(9, u.getPurchase_date());
-            ps1.setInt(10, u.getId());
+            PreparedStatement ps1 = con.prepareStatement("update product set p_id=?,p_name=?,p_category=?,p_company=?,p_quantity=?,p_unit=?,p_price=? where id=?");
+            ps1.setString(1, u.getP_id());
+            ps1.setString(2, u.getP_name());
+            ps1.setString(3, u.getP_category());
+            
+           
+            ps1.setString(4, u.getP_company());
+            ps1.setString(5, u.getP_quantity());
+            ps1.setString(6, u.getP_unit());
+            ps1.setString(7, u.getP_price());
+            //ps1.setString(8, u.getProduct_exp_date());
+            //ps1.setString(9, u.getPurchase_date());
+            ps1.setInt(8, u.getId());
             status = ps1.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
@@ -85,22 +87,25 @@ public class UserDao {
         User u = null;
         try {
             Connection con = getConnection();
-            PreparedStatement ps1 = con.prepareStatement("select * from purchase where id=?");
+            PreparedStatement ps1 = con.prepareStatement("select * from product where id=?");
             ps1.setInt(1, id);
             ResultSet rs = ps1.executeQuery();
             while (rs.next()) {
                 u = new User();
                 u.setId(rs.getInt("id"));
-                u.setCategory(rs.getString("category"));
-                u.setDealer_name(rs.getString("dealer_name"));
-                u.setCode(rs.getString("code"));
-                u.setProduct_name(rs.getString("product_name"));
-                u.setCompany_name(rs.getString("company_name"));
-                u.setQuantity(rs.getString("quantity"));
-                u.setUnit(rs.getString("unit"));
-                u.setPer_unit_price(rs.getString("per_unit_price"));
-                u.setProduct_exp_date(rs.getString("product_exp_date"));
-                u.setPurchase_date(rs.getString("purchase_date"));
+                u.setP_id(rs.getString("p_id"));
+                  u.setP_name(rs.getString("p_name"));
+                u.setP_category(rs.getString("p_category"));
+               // u.setDealer_name(rs.getString("dealer_name"));
+               // u.setCode(rs.getString("code"));
+               u.setP_company(rs.getString("p_company"));
+              
+                
+                u.setP_quantity(rs.getString("p_quantity"));
+                u.setP_unit(rs.getString("p_unit"));
+                u.setP_price(rs.getString("p_price"));
+//                u.setProduct_exp_date(rs.getString("product_exp_date"));
+//                u.setPurchase_date(rs.getString("purchase_date"));
             }
         } catch (Exception e) {
             System.out.println(e);

@@ -11,7 +11,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Inventory System</title>
+        <title>Stock Management System</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.6 -->
@@ -85,7 +85,7 @@
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img src="../../../Image/logo.png" class="user-image" alt="User Image">
-                                    <span class="hidden-xs"> Optimus Prime</span>
+                                    <span class="hidden-xs">Grocery Shop</span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
@@ -94,8 +94,7 @@
 
                                         <p>
                                             <i style="font-size: 18px"><%=session.getAttribute("userid")%></i><br>
-                                            Optimus Prime - Web Developer
-                                            <small>Member since 2016</small>
+                                           
                                         </p>
                                     </li>
 
@@ -126,7 +125,7 @@
                             <img src="../../../Image/logo.png" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
-                            <p>Optimus Prime</p>
+                            <p>Grocery Shop</p>
 
                         </div>
                     </div>
@@ -242,63 +241,44 @@
 
                                 <form class="" action="UpdatePurchase.jsp">
                                     <input type="hidden" name="id" value="<%=u.getId() %>"/>
-                                    <label><h1>Purchase Details</h1></label>
+                                    <label><h1>Product Details</h1></label>
                                     <table>
                                         
                                         <tr>
-                                            <td>
+                                              <td>
                                                 <div class="form-group">
-                                                    <label for="customer id">Category: </label><br>
-                                                    <input type="text" class="form-control" name="category" value="<%= u.getCategory()%>" placeholder="">
-                                                </div>
-                                            </td>
-                                            <td>
-                                            <%@page import="java.sql.*"%>
-        <%@page import="com.inventory.dao.UserDao, com.inventory.bean.*, java.util.*"%>
-        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-     
-<%
-List<User> list=UserDao.getAllRecords();
-request.setAttribute("list",list);
-%>
-                                            <div class="form-group">
-                                                <label for="category">Supplier Name:</label><br>
-                                                <select class="form-control" id="category" NAME="dealer_name">
-                                                    <option><%= u.getDealer_name()%></option>
-                                                    <c:forEach var="u" items="${list}">
-                                                        
-                                                    <option>${u.dealer_name}</option>
-                                                    
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                        </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <label for="">Product Code</label><br>
-                                                    <input type="text" class="form-control" value="<%= u.getCode()%>" name="code"  placeholder="Enter Branch">
+                                                    <label for="p_id">Product Code</label><br>
+                                                    <input type="text" class="form-control" value="<%= u.getP_id()%>" name="p_id"  placeholder="Enter Branch">
                                                 </div>
 
                                             </td>
+                                              <td>
+                                                <div class="form-group">
+                                                    <label for="p_name">Product Name:</label><br>
+                                                    <input type="text" class="form-control" value="<%= u.getP_name()%>" name="p_name"  placeholder="Enter Quantity">
+                                                </div>
+                                            </td>
+                                           
+                                         
                                         </tr>
                                        
                                         <tr>
-                                            <td>
+                                           <td>
                                                 <div class="form-group">
-                                                    <label for="customer id">Product Name:</label><br>
-                                                    <input type="text" class="form-control" value="<%= u.getProduct_name()%>" name="product_name"  placeholder="Enter Quantity">
+                                                    <label for="p_category">Category: </label><br>
+                                                    <input type="text" class="form-control" name="p_category" value="<%= u.getP_category()%>" placeholder="">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <label for="">Company Name</label><br>
-                                                    <input type="text" class="form-control" value="<%= u.getCompany_name()%>" name="company_name" placeholder="Enter Quantity">
+                                                    <label for="p_company">Company Name</label><br>
+                                                    <input type="text" class="form-control" value="<%= u.getP_company()%>" name="p_company" placeholder="Enter Quantity">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <label for="">Quantity </label><br>
-                                                    <input type="text" class="form-control" value="<%= u.getQuantity()%>" name="quantity" id="customer id" placeholder="">
+                                                    <label for="p_quantity">Quantity </label><br>
+                                                    <input type="text" class="form-control" value="<%= u.getP_quantity()%>" name="p_quantity" id="customer id" placeholder="">
                                                 </div>
                                             </td>
                                         </tr>
@@ -306,19 +286,19 @@ request.setAttribute("list",list);
                                         <tr>
                                             <td>
                                                 <div class="form-group">
-                                                    <label for="">Unit</label><br>
-                                                    <input type="text" class="form-control" value="<%= u.getUnit()%>" name="unit" placeholder="Enter date">
+                                                    <label for="p_unit">Unit</label><br>
+                                                    <input type="text" class="form-control" value="<%= u.getP_unit()%>" name="p_unit" placeholder="Enter date">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <label for="">Per-Unit_price</label><br>
-                                                    <input type="text" class="form-control" value="<%= u.getPer_unit_price()%>" name="per_unit_price" placeholder="Enter date">
+                                                    <label for="p_price">Per-Unit_price</label><br>
+                                                    <input type="text" class="form-control" value="<%= u.getP_price()%>" name="p_price" placeholder="Enter date">
                                                 </div>
                                             </td>
                                         </tr>
                                         
-                                         <tr>
+<!--                                         <tr>
                                             <td>
                                                 <div class="form-group">
                                                     <label for="">Product-Expire-Date</label><br>
@@ -331,7 +311,7 @@ request.setAttribute("list",list);
                                                     <input type="date" class="form-control" value="<%=u.getPurchase_date()%>" name="purchase_date" placeholder="Enter date">
                                                 </div>
                                             </td>
-                                        </tr>
+                                        </tr>-->
                                        
 
                                         <tr>
@@ -375,7 +355,7 @@ request.setAttribute("list",list);
                 <div class="pull-right hidden-xs">
 
                 </div>
-                <strong>Copyright &copy; 2016-2017 <a href="#">Optimus Prime</a>.</strong> The Group Of Friends
+                
             </footer>
 
             <!-- Control Sidebar -->

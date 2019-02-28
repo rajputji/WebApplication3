@@ -2,6 +2,10 @@ package com.inventory.bean;
 
 public class User {
 
+    public int getId() {
+        return id;
+    }
+    
     public void setId(int id) {
         this.id = id;
     }
@@ -77,16 +81,74 @@ public class User {
     public void setPurchase_date(String purchase_date) {
         this.purchase_date = purchase_date;
     }
+    //extra
+
+    public String getP_id() {
+        return p_id;
+    }
+
+    public void setP_id(String p_id) {
+        this.p_id = p_id;
+    }
+
+    public String getP_name() {
+        return p_name;
+    }
+
+    public void setP_name(String p_name) {
+        this.p_name = p_name;
+    }
+
+    public String getP_category() {
+        return p_category;
+    }
+
+    public void setP_category(String p_category) {
+        this.p_category = p_category;
+    }
+
+    public String getP_company() {
+        return p_company;
+    }
+
+    public void setP_company(String p_company) {
+        this.p_company = p_company;
+    }
+
+    public String getP_quantity() {
+        return p_quantity;
+    }
+
+    public void setP_quantity(String p_quantity) {
+        this.p_quantity = p_quantity;
+    }
+
+    public String getP_unit() {
+        return p_unit;
+    }
+
+    public void setP_unit(String p_unit) {
+        this.p_unit = p_unit;
+    }
+
+    public String getP_price() {
+        return p_price;
+    }
+
+    public void setP_price(String p_price) {
+        this.p_price = p_price;
+    }
+    
+    
 
     //All works of Dealership
     private String dealer_name, branch, dealer_id, contact, address, agent_name, agent_contact, date;
 
     private int id;
-    private String category, code, product_name, company_name, quantity, unit, per_unit_price, product_exp_date, purchase_date;
+    private String category, code,p_id,p_name,p_category,p_company,p_quantity,p_unit,p_price,
+            product_name, company_name, quantity, unit, per_unit_price, product_exp_date, purchase_date;
 
-    public int getId() {
-        return id;
-    }
+   
 
     public String getDealer_name() {
         return dealer_name;

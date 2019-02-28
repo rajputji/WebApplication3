@@ -13,7 +13,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Inventory System</title>
+        <title>Stock Management System</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.6 -->
@@ -96,8 +96,7 @@
 
                                         <p>
                                              <i style="font-size: 18px"><%=session.getAttribute("userid")%></i><br>
-                                            Optimus Prime - Web Developer
-                                            <small>Member since 2016</small>
+                                            
                                         </p>
                                     </li>
 
@@ -128,7 +127,7 @@
                             <img src="../../Image/logo.png" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
-                            <p>Optimus Prime</p>
+                            <p>Grocery Shop</p>
 
                         </div>
                     </div>
