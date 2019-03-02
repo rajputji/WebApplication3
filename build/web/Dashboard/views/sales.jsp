@@ -13,7 +13,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Inventory System</title>
+        <title>Stock Management System</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.6 -->
@@ -24,7 +24,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
-     
+
         <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
         <!-- iCheck -->
         <link rel="stylesheet" href="../../plugins/iCheck/flat/blue.css">
@@ -89,7 +89,7 @@
 
         </script> 
 
-        
+
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -128,7 +128,7 @@
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img src="../../Image/logo.png" class="user-image" alt="User Image">
-                                    <span class="hidden-xs"> Optimus Prime</span>
+                                    <span class="hidden-xs">Grocery Shop</span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
@@ -137,8 +137,7 @@
 
                                         <p>
                                             <i style="font-size: 18px"><%=session.getAttribute("userid")%></i><br>
-                                            Optimus Prime - Web Developer
-                                            <small>Member since 2016</small>
+
                                         </p>
                                     </li>
 
@@ -148,7 +147,7 @@
                                             <a href="#" class="btn btn-default btn-flat">Profile</a>
                                         </div>
                                         <div class="pull-right">
-                                             <a href="../../logout.jsp" class="btn btn-default btn-flat">Sign out</a>
+                                            <a href="../../logout.jsp" class="btn btn-default btn-flat">Sign out</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -169,7 +168,7 @@
                             <img src="../../Image/logo.png" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
-                            <p>Optimus Prime</p>
+                            <p>Grocery Shop</p>
 
                         </div>
                     </div>
@@ -281,7 +280,7 @@
                                 <tr>
                                     <td>
                                         <div class="form-group"><br>
-                                            <label for="customer id">Product Code :</label>
+                                            <label for="p_id">Product Code :</label>
                                             <input type="text" name="t1" onkeyup="sendInfo()" class="form-control" placeholder="Enter code">
                                         </div>
 
@@ -351,18 +350,36 @@
 
             <br>
 
-
             <%@ page import="java.io.*,java.util.*,java.sql.*"%>
+            <%@ page import="com.stock.*"%>
+
+
+            <%
+                if (session.getAttribute("c") != null) {
+                    ArrayList cart = (ArrayList) session.getAttribute("c");
+            %>
             <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
             <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>            
-            <sql:setDataSource var="dbsource" driver="com.mysql.jdbc.Driver"
-                               url="jdbc:mysql://localhost/inventory"
-                               user="root"  password=""/>
 
+            <%--
+                        <sql:setDataSource var="dbsource" driver="com.mysql.jdbc.Driver"
+                                           url="jdbc:mysql://localhost/inventory"
+                                           user="root"  password=""/>
+            --%>
+
+            <%
+                String p_id, p_name, p_category, p_company, p_unit;
+                int p_quantity, p_price;
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "");
+                PreparedStatement ps = con.prepareStatement("select * from product where p_id=?");
+            %>
+
+            <%--
             <sql:query dataSource="${dbsource}" var="result">
-                SELECT * from sale;
-            </sql:query>            
-
+                   SELECT * from product where p_id;
+               </sql:query>            
+            --%>
 
 
             <div class="panel panel-primary" style="overflow: auto">
@@ -379,39 +396,52 @@
                             <th>Quantity</th>
                             <th>Unit</th>
                             <th>Per<br>Unit<br>Price(TK)</th>
-                            <th>Total Price</th>
-                            <th>Date</th>
                             <th>Action</th>
                         </tr>
+                        <%
+                            int a = 1;
+                            for (int i = 0; i < cart.size(); i++) {
 
-                        <% int a=1; %>
-                        <c:forEach var="row" items="${result.rows}">
-                            <tr>
-                                <td><c:out value=""/><% out.print(a++); %></td>
-                                <td><c:out value="${row.code}"/></td>
-                                <td><c:out value="${row.category}"/></td>
-                                <td><c:out value="${row.product_name}"/></td>
-                                <td><c:out value="${row.quantity}"/></td>
-                                <td><c:out value="${row.unit}"/></td>
-                                <td><c:out value="${row.per_unit_price}"/></td>
-                                <td><c:out value="${row.total_price}"/></td>
-                                <td><c:out value="${row.date}"/></td>
-                                <td>
-                                    <a href="javascript:confirmGo('Sure to delete this record?','DB/DelSale.jsp?id=<c:out value="${row.id}"/>')"  class="btn btn-danger btn-sm btn-icon icon-left" role="button">
-                                        <i class="entypo-cancel"></i>
-                                        Delete
-                                    </a>
-                                </td>
-                            </tr>
-                        </c:forEach>
+                                SaleItem item = (SaleItem) cart.get(i);
+                                ps.setString(1, item.getP_id());
 
+                                ResultSet rs = ps.executeQuery();
+                                while (rs.next()) {
+                                    p_id = rs.getString(2);
+                                    p_name = rs.getString(3);
+                                    p_category = rs.getString(4);
+                                    p_company = rs.getString(5);
+                                    p_unit = rs.getString(7);
+                                    p_price = rs.getInt(8);
 
+                                    p_quantity = item.getP_quantity();
+                        %>
+
+                        <tr>
+                            <td><% out.print(a++); %></td>
+                            <td><% out.print(p_id); %></td>
+                            <td><% out.print(p_category); %></td>
+                            <td><% out.print(p_name); %></td>
+                            <td><% out.print(p_quantity); %></td>
+                            <td><% out.print(p_unit); %></td>
+                            <td><% out.print(p_price); %></td>
+                            <td>
+                                <a href="javascript:confirmGo('Sure to delete this record?','edditCart.jsp?id=<c:out value="${p_id}"/>')"  class="btn btn-danger btn-sm btn-icon icon-left" role="button">
+                                    <i class="entypo-cancel"></i>
+                                    Delete
+                                </a>
+                            </td>
                         </tr>
+                        <%
+                                }
+                            }
+                        %>
                     </table>
                 </div>
             </div>
-
-
+            <%
+                }
+            %>
             <div class="panel panel-primary">
                 <div class="container">
 
@@ -454,19 +484,19 @@
                                 </form>
                             </div>
                             <form action="Sale_print_member.jsp">
-                            <div id="parentPermission">
-                                <table>
-                                    &nbsp;
-                                    <tr><td>User ID.:  <input type="text" name="member_id" class="form-control" placeholder="Enter User Id"></td>
-                                        <td>
-                                                    <div class="btn">
-                                                        <button class="btn btn-vimeo" >Add</button>
-                                                    </div>
+                                <div id="parentPermission">
+                                    <table>
+                                        &nbsp;
+                                        <tr><td>User ID.:  <input type="text" name="member_id" class="form-control" placeholder="Enter User Id"></td>
+                                            <td>
+                                                <div class="btn">
+                                                    <button class="btn btn-vimeo" >Add</button>
+                                                </div>
 
-                                                </td>
-                                    </tr>
-                                </table>
-                            </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </form>
 
                         </div>
@@ -481,7 +511,7 @@
             <br>
             <br>
             <br>
-            
+
             <!-- ./col -->
 
         </section>
@@ -492,7 +522,7 @@
         <div class="pull-right hidden-xs">
 
         </div>
-        <strong>Copyright &copy; 2016-2017 <a href="#">Optimus Prime</a>.</strong> The Group Of Friends
+
     </footer>
 
     <!-- Control Sidebar -->
@@ -574,4 +604,4 @@
 </body>
 </html>
 
-<% } %>
+<% }%>

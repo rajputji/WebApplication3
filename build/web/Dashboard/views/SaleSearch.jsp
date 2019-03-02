@@ -23,7 +23,7 @@
 
         <%  
         String s=request.getParameter("val");
-        String Code,Category,Product_Name,Unit,P_U_Price;
+        String p_id,p_name,p_category,p_company,p_quantity,p_unit,p_price;
         int id;
         if(s==null || s.trim().equals("")){
         //out.print("Please enter AccountID");  
@@ -33,21 +33,23 @@
         try{  
         Class.forName("com.mysql.jdbc.Driver");  
         Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","");  
-        PreparedStatement ps=con.prepareStatement("select * from purchase where code=?");  
+        PreparedStatement ps=con.prepareStatement("select * from product where p_id=?");  
         //ps.setInt(1,id);
         ps.setString(1, s);
         ResultSet rs=ps.executeQuery();  
         while(rs.next()){ 
-        Code=rs.getString(2);
-        Category=rs.getString(4);
-        Product_Name=rs.getString(5);
-        Unit=rs.getString(8);
-        P_U_Price=rs.getString(9);
+        p_id=rs.getString(2);
+        p_name=rs.getString(3);
+        p_category=rs.getString(4);
+        p_company=rs.getString(5);
+        p_quantity=rs.getString(6);
+        p_unit=rs.getString(7);
+        p_price=rs.getString(8);
         %>
         <div class="">
             
             <div class="container">
-                <form class="form-inline" action="DB/InsertSale2.jsp">
+                <form class="form-inline" method="post" action="addToCart.jsp">
                     <label><h1>Sales</h1></label>
                     <table>
                         <tr>
@@ -55,57 +57,54 @@
 
 
                                 <div class="form-group">
-                                    <label for="customer id">Code :</label><br>
-                                    <input type="text" name="code" value="<% out.print(Code);%>" class="form-control" id="customer id" placeholder="Enter Tag Number">
+                                    <label for="p_id">Product Code :</label><br>
+                                    <input type="text" name="p_id" value="<% out.print(p_id);%>" class="form-control" id="p_id" readonly>
+                                </div><br>
+                            </td>
+                            
+                            <td>
+                                <div class="form-group">
+                                    <label for="p_name">Product Name: </label><br>
+                                    <input type="text" name="p_name" value="<% out.print(p_name);%>" class="form-control" id="p_name" readonly>
                                 </div><br>
                             </td>
                             <td>
                                 <div class="form-group">
-                                    <label for="customer id">Category :</label><br>
-                                    <input type="text" name="category" value="<% out.print(Category);%>" class="form-control" id="customer id" >
+                                    <label for="p_category">Category :</label><br>
+                                    <input type="text" name="p_category" value="<% out.print(p_category);%>" class="form-control" id="p_category" readonly>
                                 </div><br>
                             </td>
 
-                            <td>
+                            
+                        </tr>
+                        <tr>
+                              <td>
                                 <div class="form-group">
-                                    <label for="customer id">Product Name: </label><br>
-                                    <input type="text" name="product_name" value="<% out.print(Product_Name);%>" class="form-control" id="customer id" placeholder="Enter Product Name">
+                                    <label for="p_company">Company:</label><br>
+                                    <input type="text" name="p_company" value="<% out.print(p_company);%>" class="form-control" id="p_company" readonly>
                                 </div><br>
                             </td>
+                            
+                            <td>
+                                <div class="form-group">
+                                    <label for="p_unit">Unit:</label><br>
+                                    <input type="text" name="p_unit" value="<% out.print(p_unit);%>" class="form-control" id="p_unit" readonly>
+                                </div><br>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="p_price">Per Unit Price: </label><br>
+                                    <input type="text" name="p_price" value="<% out.print(p_price);%>" class="form-control" id="p_price" readonly>
+                                </div><br>
+                            </td>
+
                         </tr>
                         <tr>
                             <td>
                                 <div class="form-group">
-                                    <label for="customer id">Quantity:</label><br>
-                                    <input type="text" name="quantity" class="form-control" id="customer id" placeholder="Enter Quantity">
+                                    <label for="p_quantity">Quantity:</label><br>
+                                    <input type="text" name="p_quantity"  class="form-control" id="p_quantity" placeholder="Enter Quantity" required="You have to enter some valueS">
                                 </div><br>
-                            </td>
-                            <td>
-                                <div class="form-group">
-                                    <label for="customer id">Unit:</label><br>
-                                    <input type="text" name="unit" value="<% out.print(Unit);%>" class="form-control" id="customer id" >
-                                </div><br>
-                            </td>
-                            <td>
-                                <div class="form-group">
-                                    <label for="customer id">Per Unit Price: </label><br>
-                                    <input type="text" name="per_unit_price" value="<% out.print(P_U_Price);%>" class="form-control" id="customer id" placeholder="Enter  per unit price">
-                                </div><br>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-group">
-                                    <label for="customer id">Total Price: </label><br>
-                                    <input type="text" name="total_price" class="form-control" id="customer id" placeholder="Enter Total Price">
-                                </div><br>
-                            </td>
-                            <td>
-                                <div class="form-group">
-                                    <label for="customer id">Date: </label><br>
-                                    <input type="date" name="date" class="form-control">
-                                </div>
                             </td>
                         </tr>
                         <tr>
