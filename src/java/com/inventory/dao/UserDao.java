@@ -121,7 +121,7 @@ public class UserDao {
 //                u.setProduct_exp_date(rs.getString("product_exp_date"));
 //                u.setPurchase_date(rs.getString("purchase_date"));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return u;
@@ -141,7 +141,7 @@ public class UserDao {
 
             ps.setString(5, u.getDate());
             status = ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return status;
@@ -161,7 +161,7 @@ public class UserDao {
             ps.setString(5, u.getDate());
             ps.setInt(6, u.getId());
             status = ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return status;
@@ -174,7 +174,7 @@ public class UserDao {
             PreparedStatement ps = con.prepareStatement("delete from dealership where id=?");
             ps.setInt(1, u.getId());
             status = ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
 
@@ -199,7 +199,7 @@ public class UserDao {
 
                 u.setDate(rs.getString("date"));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return u;
@@ -224,7 +224,7 @@ public class UserDao {
             ps.setString(10, u.getDate());
 
             status = ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return status;
@@ -248,7 +248,7 @@ public class UserDao {
             ps.setString(10, u.getDate());
             ps.setInt(11, u.getId());
             status = ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return status;
@@ -261,7 +261,7 @@ public class UserDao {
             PreparedStatement ps = con.prepareStatement("delete from membership where id=?");
             ps.setInt(1, u.getId());
             status = ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
 
@@ -290,7 +290,7 @@ public class UserDao {
                 u.setCategory(rs.getString("category"));
                 u.setDate(rs.getString("date"));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return u;
@@ -313,7 +313,7 @@ public class UserDao {
             ps.setString(8, u.getJoining_date());
 
             status = ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return status;
@@ -334,7 +334,7 @@ public class UserDao {
             ps.setString(8, u.getJoining_date());
             ps.setInt(9, u.getId());
             status = ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return status;
@@ -347,7 +347,7 @@ public class UserDao {
             PreparedStatement ps = con.prepareStatement("delete from staff where id=?");
             ps.setInt(1, u.getId());
             status = ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
 
@@ -373,37 +373,16 @@ public class UserDao {
                 u.setCategory(rs.getString("category"));
                 u.setJoining_date(rs.getString("joining_date"));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return u;
     }
 
 /////////////for sales//////////////
-    public static int saveSale(User u) {
-        int status = 0;
-
-        try {
-            Connection con = getConnection();
-            PreparedStatement ps1 = con.prepareStatement("insert into sale(code,category,product_name,quantity,unit,per_unit_price,total_price,date) values(?,?,?,?,?,?,?,?)");
-            ps1.setString(1, u.getCode());
-            ps1.setString(2, u.getCategory());
-            ps1.setString(3, u.getProduct_name());
-            ps1.setString(4, u.getQuantity());
-            ps1.setString(5, u.getUnit());
-            ps1.setString(6, u.getPer_unit_price());
-            ps1.setString(7, u.getT_Price());
-            ps1.setString(8, u.getDate());
-
-            status = ps1.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return status;
-    }
 
     public static List<User> getAllSaleRecords() {
-        List<User> list = new ArrayList<User>();
+        List<User> list = new ArrayList<>();
 
         try {
             Connection con = getConnection();
@@ -423,29 +402,15 @@ public class UserDao {
 
                 list.add(u);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return list;
     }
-
-    public static int deleteSale(User u) {
-        int status = 0;
-        try {
-            Connection con = getConnection();
-            PreparedStatement ps1 = con.prepareStatement("delete from sale where id=?");
-            ps1.setInt(1, u.getId());
-            status = ps1.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        return status;
-    }
-
+    
 ///////for Fetching Supplier Name//////
     public static List<User> getAllRecords() {
-        List<User> list = new ArrayList<User>();
+        List<User> list = new ArrayList<>();
 
         try {
             Connection con = getConnection();
@@ -458,10 +423,9 @@ public class UserDao {
                 u.setDealer_name(rs.getString("dealer_name"));
                 list.add(u);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return list;
     }
-
 }

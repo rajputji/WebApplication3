@@ -1,6 +1,6 @@
 <%
     if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("../../index.jsp");
 %>
 
 <%} else {
@@ -376,9 +376,7 @@
             <%@ page import="java.io.*,java.util.*,java.sql.*"%>
             <%@ page import="com.stock.*"%>
 
-
             <%
-
                 if (request.getParameter("ErrorMsg") != null) {
             %>
             <script>
@@ -486,7 +484,7 @@
                                             &nbsp;
 
                                             <tr><td>Name Of Walking Customer:
-                                                    <input type="text" name="name" class="form-control" placeholder="Enter Name">
+                                                    <input type="text" name="name" class="form-control" placeholder="Enter Name" required>
                                                 </td>
                                                 <td>
                                                     <div class="btn">
@@ -507,7 +505,7 @@
                                 <div id="parentPermission">
                                     <table>
                                         &nbsp;
-                                        <tr><td>User ID.:  <input type="text" name="member_id" class="form-control" placeholder="Enter User Id"></td>
+                                        <tr><td>User ID.:  <input type="text" name="member_id" class="form-control" placeholder="Enter User Id" required ></td>
                                             <td>
                                                 <div class="btn">
                                                     <button class="btn btn-vimeo" >Proceed</button>

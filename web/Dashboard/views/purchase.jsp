@@ -234,7 +234,7 @@
                 <div class="container">
                     <b><h2>Product Purchase</h2></b>
                     <div>                       
-                        <form class="form-inline" action="#DB/InsertPurchase.jsp" method="post">
+                        <form class="form-inline" action="DB/InsertPurchase.jsp" method="post">
                             <table width="80%">
                                 <tr>
                                     <td>

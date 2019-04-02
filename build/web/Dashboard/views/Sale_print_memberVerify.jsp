@@ -8,7 +8,8 @@ ps.setString(1,request.getParameter("member_id"));
 ResultSet rs = ps.executeQuery();
 if(rs.next())
 {
-    response.sendRedirect("Sale_print_member.jsp?member_id="+request.getParameter("member_id"));
+    response.sendRedirect("Sale_print_member.jsp?member_id="+request.getParameter("member_id")+
+            "&category="+rs.getString("category"));
 }
 else
 {

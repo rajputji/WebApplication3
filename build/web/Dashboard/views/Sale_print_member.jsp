@@ -44,142 +44,169 @@
                            url="jdbc:mysql://localhost/inventory"
                            user="root"  password=""/>
         <div class="container">
-            <div class="row">
-                <div class="col-xs-6">
-                    <h1>
-                        <a>
-                            <img src="../../Image/logo2.png" width="170" height="150" alt="" class="img-circle">
-                        </a>
-                    </h1>
-                </div>
-                <div class="col-xs-6 text-right">
-                    <h1>Slip</h1>
-                    <h1><small>Sell NO. #001</small></h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-5">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4>From: <a href="#"><%=session.getAttribute("userid")%></a></h4>
-                        </div>
-
+            <form action="DB/InsertBill.jsp" method="post">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h1>
+                            <a>
+                                <img src="../../Image/logo2.png" width="170" height="150" alt="" class="img-circle">
+                            </a>
+                        </h1>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <h1>Slip</h1>
+                        <sql:query dataSource="${dbsource}" var="res">
+                            SELECT bill_id FROM bill ORDER BY bill_id DESC LIMIT 1
+                        </sql:query>
+                        <h1><small>BILL NO.: 
+                                <c:forEach var="row" items="${res.rows}">
+                                    <c:out value="${row.bill_id + 1}"/>
+                                    <input type="hidden" value="${row.bill_id + 1}" name="bill_id"/>
+                                </c:forEach>
+                            </small>
+                        </h1>
                     </div>
                 </div>
-                <div class="col-xs-5 col-xs-offset-2 text-right">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <sql:query dataSource="${dbsource}" var="result">
-                                SELECT * from membership where member_id=?;
-                                <sql:param value="${param.member_id}" />
-                            </sql:query>
-                            <h4>To : <a href="#"><c:forEach var="row" items="${result.rows}">
+                <div class="row">
+                    <div class="col-xs-5">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4>From: <a href="#"><%=session.getAttribute("userid")%></a></h4>
+                            </div>
 
-                                        <input type="hidden" value="${param.member_id}" name="member_id"/>
-                                        <input type="text" value="${row.name}" name="name" disabled/>
-                                    </c:forEach></a></h4>
+                        </div>
+                    </div>
+                    <div class="col-xs-5 col-xs-offset-2 text-right">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <sql:query dataSource="${dbsource}" var="result">
+                                    SELECT * from membership where member_id=?;
+                                    <sql:param value="${param.member_id}" />
+                                </sql:query>
+                                <h4>To : 
+                                    <a href="#">
+                                        <c:forEach var="row" items="${result.rows}">
+                                            <input type="hidden" value="${param.member_id}" name="member_id"/>
+                                            <input type="text" value="${row.name}" name="name" disabled/>
+                                        </c:forEach>
+                                    </a>
+                                </h4>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- / end client details section -->
+                <!-- / end client details section -->
 
-            <%
-                if (session.getAttribute("c") != null) {
-                    ArrayList<SaleItem> cart = (ArrayList<SaleItem>) session.getAttribute("c");
+                <%
+                    if (session.getAttribute("c") != null) {
+                        ArrayList<SaleItem> cart = (ArrayList<SaleItem>) session.getAttribute("c");
 
-                    String p_id, p_name, p_category, p_company, p_unit;
-                    int p_quantity, p_price;
-                    Class.forName("com.mysql.jdbc.Driver");
-                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "");
-                    PreparedStatement ps = con.prepareStatement("select * from product where p_id=?");
-            %>
+                        String p_id, p_name, p_category, p_company, p_unit;
+                        int p_quantity, p_price;
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "");
+                        PreparedStatement ps = con.prepareStatement("select * from product where p_id=?");
+                %>
 
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>S.No.</th>
-                        <th>Code</th>
-                        <th>Category</th>
-                        <th>Product Name</th>
-                        <th>Company Name</th>
-                        <th>Quantity</th>
-                        <th>Unit</th>
-                        <th>Per<br>Unit<br>Price(TK)</th>
-                        <th>Total Price</th>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>S.No.</th>
+                            <th>Code</th>
+                            <th>Category</th>
+                            <th>Product Name</th>
+                            <th>Company Name</th>
+                            <th>Quantity</th>
+                            <th>Unit</th>
+                            <th>Per<br>Unit<br>Price(TK)</th>
+                            <th>Total Price</th>
 
 
-                    </tr>
-                </thead>
-                <tbody>
-                    <%
-                        int a = 1;
-                        float subtotal = 0.0f;
-                        float discount = 0.0f;
-                        for (int i = 0; i < cart.size(); i++) {
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            int a = 1;
+                            float subtotal = 0.0f;
+                            float discount = 0.0f;
+                            for (int i = 0; i < cart.size(); i++) {
 
-                            SaleItem item = (SaleItem) cart.get(i);
-                            ps.setString(1, item.getP_id());
+                                SaleItem item = (SaleItem) cart.get(i);
+                                ps.setString(1, item.getP_id());
 
-                            ResultSet rs = ps.executeQuery();
-                            while (rs.next()) {
-                                p_id = rs.getString(2);
-                                p_name = rs.getString(3);
-                                p_category = rs.getString(4);
-                                p_company = rs.getString(5);
-                                p_unit = rs.getString(7);
-                                p_price = rs.getInt(8);
-                                p_quantity = item.getP_quantity();
+                                ResultSet rs = ps.executeQuery();
+                                while (rs.next()) {
+                                    p_id = rs.getString(2);
+                                    p_name = rs.getString(3);
+                                    p_category = rs.getString(4);
+                                    p_company = rs.getString(5);
+                                    p_unit = rs.getString(7);
+                                    p_price = rs.getInt(8);
+                                    p_quantity = item.getP_quantity();
 
-                                subtotal += p_quantity * p_price;
-                    %>
+                                    subtotal += p_quantity * p_price;
+                        %>
 
-                    <tr>
-                        <td><% out.print(a++); %></td>
-                        <td><% out.print(p_id); %></td>
-                        <td><% out.print(p_category); %></td>
-                        <td><% out.print(p_name); %></td>
-                        <td><% out.print(p_company);%></td>
-                        <td><% out.print(p_quantity); %></td>
-                        <td><% out.print(p_unit); %></td>
-                        <td><% out.print(p_price); %></td>
-                        <td><% out.print(p_quantity * p_price);%></td>
-                    </tr>
-                    <%
+                        <tr>
+                            <td><% out.print(a++); %></td>
+                            <td><% out.print(p_id); %></td>
+                            <td><% out.print(p_category); %></td>
+                            <td><% out.print(p_name); %></td>
+                            <td><% out.print(p_company);%></td>
+                            <td><% out.print(p_quantity); %></td>
+                            <td><% out.print(p_unit); %></td>
+                            <td><% out.print(p_price); %></td>
+                            <td><% out.print(p_quantity * p_price);%></td>
+                        </tr>
+                        <%
+                                }
                             }
-                        }
-                    %>
-                </tbody>
-            </table>
-            <div class="row text-right">
-                <div class="col-xs-2 col-xs-offset-8">
-                    <p>
+                            String per = null;
+                            String category = request.getParameter("category");
+                            if (category.equals("Premium")) {
+                                per = "5%";
+                                discount = (float) (subtotal * 0.05);
+                            } else if (category.equals("Silver")) {
+                                per = "10%";
+                                discount = (float) (subtotal * 0.10);
+                            } else {
+                                per = "15%";
+                                discount = (float) (subtotal * 0.15);
+                            }
+                        %>
+                    </tbody>
+                </table>
+                <div class="row text-right">
+                    <div class="col-xs-2 col-xs-offset-8">
+                        <p>
+                            <strong>
+                                Sub Total : <br>
+                                Discount ( <% out.print(per);%> ) : <br>
+                               ( <%=category%> ) <br>
+                                Total : <br>
+                                Date : <br>
+                            </strong>
+                        </p>
+                    </div>
+                    <div class="col-xs-2">
                         <strong>
-                            Sub Total : <br>
-                            Discount(): <br><br>
-                            Total : <br>
-                            Date : <br>
+                            <input type="text" name="total_amt" value="<%=subtotal%>"> <br>
+                            <input type="text" name="discount" value="<%=discount%>"> <br>
+                            <input type="text" name="final_amt" value="<%=subtotal - discount%>"> <br>
+                            <input type="text" name="date" id="mydate"> <br>
+                            <script>
+                                var currentDate = new Date();
+                                var day = currentDate.getDate();
+                                var month = currentDate.getMonth() + 1;
+                                var year = currentDate.getFullYear();
+                                document.getElementById("mydate").value = day + "/" + month + "/" + year;
+                            </script>
+                            <br>
                         </strong>
-                    </p>
+                    </div>
                 </div>
-                <div class="col-xs-2">
-                    <strong>
-                        <input type="text" value="<%=subtotal%>"> <br>
-                        <input type="text" value="<%=discount%>"> <br>
-                        <input type="text" value="<%=subtotal - discount%>"> <br>
-                        <input type="text" id="mydate"> <br>
-                        <script>
-                            var currentDate = new Date();
-                            var day = currentDate.getDate();
-                            var month = currentDate.getMonth() + 1;
-                            var year = currentDate.getFullYear();
-                            document.getElementById("mydate").value = day + "/" + month + "/" + year;
-                        </script>
-                        <br>
-                    </strong>
-                </div>
-            </div>
-
+                <input type="submit" class="pull-right btn btn-primary" style="width:14%; " value="Confirm"/>
+            </form>
         </div>
     </body>
 </html>
