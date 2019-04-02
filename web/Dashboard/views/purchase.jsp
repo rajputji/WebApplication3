@@ -4,7 +4,6 @@
 %>
 
 <%} else {
-
 %>
 
 
@@ -41,12 +40,6 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
         <link rel="stylesheet" href="style.css" type="text/css">
 
     </head>
@@ -222,148 +215,134 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a href="../../main.jsp"><i class="fa fa-dashboard"></i>Home</a></li>
-
             </ol>
         </section>
 
+        <%
+            if(request.getParameter("msg")!=null)
+            {
+                String msg = request.getParameter("msg");
+                out.print("<script>alert('"+msg+"');</script>");
+            }
+        %>
+
+
+
         <!-- Main content -->
-
-
-        <section class="content">
+        <section class="content" style="width:80%;">
             <div class="panel panel-primary">
                 <div class="container">
                     <b><h2>Product Purchase</h2></b>
-                    <form class="form-inline" action="DB/InsertPurchase.jsp" method="post">
-                        <table>
-                            <tr>
-                                <!--                                        <td>
-                                                                            <div class="form-group">
-                                                                                <label for="category">Category:</label><br>
-                                                                                <select class="form-control" id="category" NAME="category">
-                                                                                    <option default>Select Category</option>
-                                                                                    <option>Home Appliances</option>
-                                                                                    <option>Grocery</option>
-                                                                                    <option>Vegetables</option>
-                                                                                    <option>Bread</option>
-                                                                                    <option>Fish</option>
-                                                                                    <option>Meat</option>
-                                                                                    <option>Diary</option>
-                                                                                    <option>Beverage</option>
-                                                                                    <option>Paper Goods</option>
-                                                                                    <option>Personal Care</option>
-                                                                                    <option>Electronis</option>
-                                                                                    <option>Toy</option>
-                                                                                    <option>Sports</option>
-                                                                                </select>
-                                                                            </div><br/>
-                                                                        </td>-->
-                                <td>
-                                    <%@page import="java.sql.*"%>
-                                    <%@page import="com.inventory.dao.UserDao, com.inventory.bean.*, java.util.*"%>
-                                    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+                    <div>                       
+                        <form class="form-inline" action="#DB/InsertPurchase.jsp" method="post">
+                            <table width="80%">
+                                <tr>
+                                    <td>
+                                        <%@page import="java.sql.*"%>
+                                        <%@page import="com.inventory.dao.UserDao, com.inventory.bean.*, java.util.*"%>
+                                        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-                                    <%
-                                        List<User> list = UserDao.getAllRecords();
-                                        request.setAttribute("list", list);
-                                    %>
-                                    <div class="form-group">
-                                        <label for="category">Supplier Id:</label><br>
-                                        <select class="form-control" id="category" NAME="dealer_name">
-                                            <option>Select</option>
-                                            <c:forEach var="u" items="${list}">
+                                        <%                                            List<User> list = UserDao.getAllRecords();
+                                            request.setAttribute("list", list);
+                                        %>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label for="category">Dealer Id:</label><br>
+                                                <select class="form-control" id="dealer_id" NAME="dealer_id" required>
+                                                    <c:forEach var="u" items="${list}">
+                                                        <option>${u.dealer_id}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label for="p_id">Product Code:</label><br>
+                                                <input type="code" class="form-control" id="p_id" NAME="p_id" placeholder="Enter Product Code" pattern="^[a-zA-Z][a-zA-z0-9]+$" required>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label for="p_name">Product Name :</label><br>
+                                                <input type="text" name="p_name" class="form-control" id="p_name" placeholder="Enter Product Name" required>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label for="p_category">Product Category :</label><br>
+                                                <input type="text" name="p_category" class="form-control" id="p_category" placeholder="Enter Category" required>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label for="p_category">Company Name :</label><br>
+                                                <input type="text" name="p_company" class="form-control" id="p_company" placeholder="Enter Company Name" required>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label for="p_unit">Unit:</label><br>
+                                                <input type="text" name="p_unit" class="form-control" id="p_unit" placeholder="Enter Unit" required>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
 
-                                                <option>${u.dealer_id}</option>
-
-                                            </c:forEach>
-                                        </select>
-                                    </div><br/>
-                                </td>
-                                <td>
-
-                                    <div class="form-group">
-                                        <label for="code">Product Code:</label><br>
-                                        <input type="code" class="form-control" id="code" NAME="code" placeholder="Enter code" required>
-
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <!--                                        <td>
-                                                                            <div class="form-group">
-                                                                                <label for="product_name">Product Name:</label><br>
-                                                                                <input type="product_name" class="form-control" id="product_name" NAME="product_name" placeholder="Enter Product Name" required>
-                                                                            </div><br>
-                                                                        </td>-->
-                                <!--                                        <td>
-                                                                            <div class="form-group">
-                                                                                <label for="product_name">Company Name:</label><br>
-                                                                                <input type="product_name" class="form-control" id="product_name" NAME="company_name" placeholder="Enter Company Name" required>
-                                                                            </div><br>
-                                                                        </td>-->
-                                <td>
-                                    <div class="form-group">
-                                        <label for="quantity">Quantity:</label><br>
-                                        <input type="quantity" class="form-control" id="quantity" NAME="quantity" placeholder="Enter quantity" required>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <!--                                        <td>
-                                                                            <div class="form-group">
-                                                                                <label for="unit">Unit:</label><br>
-                                                                                <select class="form-control" id="unit" NAME="unit">
-                                                                                    <option default="select unit">Select Unit</option>
-                                                                                    <option>K.G</option>
-                                                                                    <option>Gram</option>
-                                                                                    <option>Litre</option>
-                                                                                    <option>Piece</option>
-                                                                                    <option>Chase</option>
-                                                                                    <option>Inch</option>
-                                                                                    <option>Miter</option>
-                                                                                    <option>C.M</option>                                      
-                                                                                </select>
-                                                                            </div><br>
-                                                                        </td>-->
-                                <td>
-                                    <div class="form-group">
-                                        <label for="price">Per-Unit-Price:</label><br>
-                                        <input type="price" class="form-control" id="price" NAME="per_unit_price" placeholder="Enter Per-Unit_price" required>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <!--                                        <td>
-                                                                    <div class="form-group">
-                                                                        <label for="mobile">Product Expire Date</label><br>
-                                                                        <input type="date" name="product_exp_date" class="form-control" id="mobile" pattern="^\d{5}-\d{6}}$" required>
-                                                                    </div><br>
-                                                                            
-                                                                        </td>-->
-                                <td>
-                                    <div class="form-group">
-                                        <label for="mobile">Purchase Date</label><br>
-                                        <input type="date" name="purchase_date" class="form-control" id="mobile" pattern="^\d{5}-\d{6}}$" required>
-                                    </div><br>
-
-                                </td>
-                            </tr>
-                            <tr>
-
-                            </tr>
-
-                            <tr>
-
-                                <td>
-                                    <br>
-                                    <button class="btn btn-danger">Submit</button>
-                                </td>
-                            </tr>
-                        </table>
-                        <br>
-                    </form>
+                                                <label for="p_quantity">Quantity:</label><br>
+                                                <input type="number" name="p_quantity" class="form-control" id="p_quantity" placeholder="Enter Quantity" pattern="^[0-9]+$" required>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label for="per_unit_price">Per Unit Price: </label><br>
+                                                <input type="number" name="per_unit_price" class="form-control" id="per_unit_price" placeholder="Enter Per_Unit_Price" pattern="^[0-9]+$" required>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label for="purchase_date">Purchase Date</label><br>
+                                                <input type="date" name="purchase_date" class="form-control" id="purchase_date" required>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="form-group col-md-offset-3" style="width:20%;">
+                                            <div class="col-md-12">
+                                                <button class="btn btn-danger btn-block">Submit</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>
@@ -374,7 +353,6 @@
         <div class="pull-right hidden-xs">
 
         </div>
-        <strong>Copyright &copy; 2016-2017 <a href="#">Optimus Prime</a>.</strong> The Group Of Friends
     </footer>
 
     <!-- Control Sidebar -->

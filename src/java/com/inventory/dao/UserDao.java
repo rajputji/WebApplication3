@@ -13,31 +13,48 @@ public class UserDao {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "");
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
         }
         return con;
     }
 
 //All works of purchase
+    public static int saveproduct(User u) {
+        int status = 0;
+        try {
+            Connection con;
+            con = getConnection();
+            PreparedStatement ps1 = con.prepareStatement("insert into product(p_id,p_name,p_category,p_company,p_quantity,p_unit,p_price) values(?,?,?,?,?,?,?)");
+            ps1.setString(1, u.getP_id());
+            ps1.setString(2, u.getP_name());
+            ps1.setString(3, u.getP_category());
+            ps1.setString(4, u.getP_company());
+            ps1.setString(5, u.getP_quantity());
+            ps1.setString(6, u.getP_unit());
+            ps1.setString(7, u.getPer_unit_price());
+            status = ps1.executeUpdate();
+            con.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+
     public static int savepurchase(User u) {
         int status = 0;
-
         try {
-            Connection con = getConnection();
-            PreparedStatement ps1 = con.prepareStatement("insert into purchase(category,dealer_name,code,product_name,company_name,quantity,unit,per_unit_price,product_exp_date,purchase_date) values(?,?,?,?,?,?,?,?,?,?)");
-            ps1.setString(1, u.getCategory());
-            ps1.setString(2, u.getDealer_name());
-            ps1.setString(3, u.getCode());
-            ps1.setString(4, u.getProduct_name());
-            ps1.setString(5, u.getCompany_name());
-            ps1.setString(6, u.getQuantity());
-            ps1.setString(7, u.getUnit());
-            ps1.setString(8, u.getPer_unit_price());
-            ps1.setString(9, u.getProduct_exp_date());
-            ps1.setString(10, u.getPurchase_date());
+            Connection con;
+            con = getConnection();
+            PreparedStatement ps1 = con.prepareStatement("insert into purchase(dealer_id,p_id,quantity,per_unit_price,purchase_date) values(?,?,?,?,?)");
+            ps1.setString(1, u.getDealer_id());
+            ps1.setString(2, u.getP_id());
+            ps1.setString(3, u.getP_quantity());
+            ps1.setString(4, u.getPer_unit_price());
+            ps1.setString(5, u.getPurchase_date());
             status = ps1.executeUpdate();
-        } catch (Exception e) {
+            con.close();
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return status;
@@ -53,8 +70,7 @@ public class UserDao {
             ps1.setString(1, u.getP_id());
             ps1.setString(2, u.getP_name());
             ps1.setString(3, u.getP_category());
-            
-           
+
             ps1.setString(4, u.getP_company());
             ps1.setString(5, u.getP_quantity());
             ps1.setString(6, u.getP_unit());
@@ -63,7 +79,7 @@ public class UserDao {
             //ps1.setString(9, u.getPurchase_date());
             ps1.setInt(8, u.getId());
             status = ps1.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return status;
@@ -73,13 +89,12 @@ public class UserDao {
         int status = 0;
         try {
             Connection con = getConnection();
-            PreparedStatement ps1 = con.prepareStatement("delete from purchase where id=?");
+            PreparedStatement ps1 = con.prepareStatement("delete from product where id=?");
             ps1.setInt(1, u.getId());
             status = ps1.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
-
         return status;
     }
 
@@ -94,13 +109,12 @@ public class UserDao {
                 u = new User();
                 u.setId(rs.getInt("id"));
                 u.setP_id(rs.getString("p_id"));
-                  u.setP_name(rs.getString("p_name"));
+                u.setP_name(rs.getString("p_name"));
                 u.setP_category(rs.getString("p_category"));
-               // u.setDealer_name(rs.getString("dealer_name"));
-               // u.setCode(rs.getString("code"));
-               u.setP_company(rs.getString("p_company"));
-              
-                
+                // u.setDealer_name(rs.getString("dealer_name"));
+                // u.setCode(rs.getString("code"));
+                u.setP_company(rs.getString("p_company"));
+
                 u.setP_quantity(rs.getString("p_quantity"));
                 u.setP_unit(rs.getString("p_unit"));
                 u.setP_price(rs.getString("p_price"));
@@ -120,11 +134,11 @@ public class UserDao {
             Connection con = getConnection();
             PreparedStatement ps = con.prepareStatement("insert into dealership(dealer_name,dealer_id,contact,address,date) values(?,?,?,?,?)");
             ps.setString(1, u.getDealer_name());
-         
+
             ps.setString(2, u.getDealer_id());
             ps.setString(3, u.getContact());
             ps.setString(4, u.getAddress());
-            
+
             ps.setString(5, u.getDate());
             status = ps.executeUpdate();
         } catch (Exception e) {
@@ -139,11 +153,11 @@ public class UserDao {
             Connection con = getConnection();
             PreparedStatement ps = con.prepareStatement("update dealership set dealer_name=?,dealer_id=?,contact=?,address=?,date=? where id=?");
             ps.setString(1, u.getDealer_name());
-          
+
             ps.setString(2, u.getDealer_id());
             ps.setString(3, u.getContact());
             ps.setString(4, u.getAddress());
-           
+
             ps.setString(5, u.getDate());
             ps.setInt(6, u.getId());
             status = ps.executeUpdate();
@@ -178,11 +192,11 @@ public class UserDao {
                 u = new User();
                 u.setId(rs.getInt("id"));
                 u.setDealer_name(rs.getString("dealer_name"));
-              
+
                 u.setDealer_id(rs.getString("dealer_id"));
                 u.setContact(rs.getString("contact"));
                 u.setAddress(rs.getString("address"));
-                
+
                 u.setDate(rs.getString("date"));
             }
         } catch (Exception e) {
@@ -191,7 +205,7 @@ public class UserDao {
         return u;
     }
 //All works of MemberShip
-    
+
     public static int saveMember(User u) {
         int status = 0;
         try {
@@ -203,7 +217,7 @@ public class UserDao {
             ps.setString(4, u.getPassword());
             ps.setString(5, u.getEmail());
             ps.setString(6, u.getMobile_no());
-            
+
             ps.setString(7, u.getPer_address());
             ps.setString(8, u.getPayment());
             ps.setString(9, u.getCategory());
@@ -227,7 +241,7 @@ public class UserDao {
             ps.setString(4, u.getPassword());
             ps.setString(5, u.getEmail());
             ps.setString(6, u.getMobile_no());
-           
+
             ps.setString(7, u.getPer_address());
             ps.setString(8, u.getPayment());
             ps.setString(9, u.getCategory());
@@ -270,7 +284,7 @@ public class UserDao {
                 u.setPassword(rs.getString("password"));
                 u.setEmail(rs.getString("email"));
                 u.setMobile_no(rs.getString("mobile_no"));
-               
+
                 u.setPer_address(rs.getString("per_address"));
                 u.setPayment(rs.getString("payment"));
                 u.setCategory(rs.getString("category"));
@@ -283,81 +297,90 @@ public class UserDao {
     }
 
 /////////////////////For Staff//////
-   public static int saveStaff(User u){
-	int status=0;
-	try{
-		Connection con=getConnection();
-		PreparedStatement ps=con.prepareStatement("insert into staff(staff_id,password,name,gender,mobile_no,per_address,category,joining_date) values(?,?,?,?,?,?,?,?)");
-		ps.setString(1,u.getStaff_id());
-                ps.setString(2,u.getPassword());
-		ps.setString(3,u.getName());
-		ps.setString(4,u.getGender());
-                ps.setString(5,u.getMobile_no());
-		
-                ps.setString(6,u.getPer_address());
-                ps.setString(7,u.getCategory());
-                ps.setString(8,u.getJoining_date());
-                
-		status=ps.executeUpdate();
-	}catch(Exception e){System.out.println(e);}
-	return status;
-}
-public static int updateStaff(User u){
-	int status=0;
-	try{
-		Connection con=getConnection();
-		PreparedStatement ps=con.prepareStatement("update staff set staff_id=?,password=?,name=?,gender=?,mobile_no=?,per_address=?,category=?,joining_date=? where id=?");
-		ps.setString(1,u.getStaff_id());
-                ps.setString(2,u. getPassword());
-		ps.setString(3,u.getName());
-		ps.setString(4,u. getGender());
-                ps.setString(5,u.getMobile_no());
-                ps.setString(6,u.getPer_address());
-                ps.setString(7,u.getCategory());
-                ps.setString(8,u.getJoining_date());
-		ps.setInt(9,u.getId());
-		status=ps.executeUpdate();
-	}catch(Exception e){System.out.println(e);}
-	return status;
-}
-public static int deleteStaff(User u){
-	int status=0;
-	try{
-		Connection con=getConnection();
-		PreparedStatement ps=con.prepareStatement("delete from staff where id=?");
-		ps.setInt(1,u.getId());
-		status=ps.executeUpdate();
-	}catch(Exception e){System.out.println(e);}
+    public static int saveStaff(User u) {
+        int status = 0;
+        try {
+            Connection con = getConnection();
+            PreparedStatement ps = con.prepareStatement("insert into staff(staff_id,password,name,gender,mobile_no,per_address,category,joining_date) values(?,?,?,?,?,?,?,?)");
+            ps.setString(1, u.getStaff_id());
+            ps.setString(2, u.getPassword());
+            ps.setString(3, u.getName());
+            ps.setString(4, u.getGender());
+            ps.setString(5, u.getMobile_no());
 
-	return status;
-}
+            ps.setString(6, u.getPer_address());
+            ps.setString(7, u.getCategory());
+            ps.setString(8, u.getJoining_date());
 
-public static User getStaffRecordMemberById(int id){
-	User u=null;
-	try{
-		Connection con=getConnection();
-		PreparedStatement ps=con.prepareStatement("select * from staff where id=?");
-		ps.setInt(1,id);
-		ResultSet rs=ps.executeQuery();
-		while(rs.next()){
-			u=new User();
-			u.setId(rs.getInt("id"));
-			u.setStaff_id(rs.getString("staff_id"));
-                        u.setPassword(rs.getString("password"));
-			u.setName(rs.getString("name"));
-			u.setGender(rs.getString("gender"));                      
-			u.setMobile_no(rs.getString("mobile_no"));
-			u.setPer_address(rs.getString("per_address"));			
-                        u.setCategory(rs.getString("category"));
-			u.setJoining_date(rs.getString("joining_date"));
-		}
-	}catch(Exception e){System.out.println(e);}
-	return u;
-}
+            status = ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+
+    public static int updateStaff(User u) {
+        int status = 0;
+        try {
+            Connection con = getConnection();
+            PreparedStatement ps = con.prepareStatement("update staff set staff_id=?,password=?,name=?,gender=?,mobile_no=?,per_address=?,category=?,joining_date=? where id=?");
+            ps.setString(1, u.getStaff_id());
+            ps.setString(2, u.getPassword());
+            ps.setString(3, u.getName());
+            ps.setString(4, u.getGender());
+            ps.setString(5, u.getMobile_no());
+            ps.setString(6, u.getPer_address());
+            ps.setString(7, u.getCategory());
+            ps.setString(8, u.getJoining_date());
+            ps.setInt(9, u.getId());
+            status = ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+
+    public static int deleteStaff(User u) {
+        int status = 0;
+        try {
+            Connection con = getConnection();
+            PreparedStatement ps = con.prepareStatement("delete from staff where id=?");
+            ps.setInt(1, u.getId());
+            status = ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return status;
+    }
+
+    public static User getStaffRecordMemberById(int id) {
+        User u = null;
+        try {
+            Connection con = getConnection();
+            PreparedStatement ps = con.prepareStatement("select * from staff where id=?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                u = new User();
+                u.setId(rs.getInt("id"));
+                u.setStaff_id(rs.getString("staff_id"));
+                u.setPassword(rs.getString("password"));
+                u.setName(rs.getString("name"));
+                u.setGender(rs.getString("gender"));
+                u.setMobile_no(rs.getString("mobile_no"));
+                u.setPer_address(rs.getString("per_address"));
+                u.setCategory(rs.getString("category"));
+                u.setJoining_date(rs.getString("joining_date"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return u;
+    }
 
 /////////////for sales//////////////
-
-public static int saveSale(User u) {
+    public static int saveSale(User u) {
         int status = 0;
 
         try {
@@ -371,7 +394,7 @@ public static int saveSale(User u) {
             ps1.setString(6, u.getPer_unit_price());
             ps1.setString(7, u.getT_Price());
             ps1.setString(8, u.getDate());
-            
+
             status = ps1.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
@@ -379,33 +402,34 @@ public static int saveSale(User u) {
         return status;
     }
 
+    public static List<User> getAllSaleRecords() {
+        List<User> list = new ArrayList<User>();
 
-public static List<User> getAllSaleRecords(){
-	List<User> list=new ArrayList<User>();
-	
-	try{
-		Connection con=getConnection();
-		PreparedStatement ps=con.prepareStatement("select * from sale");
-		ResultSet rs=ps.executeQuery();
-		while(rs.next()){
-			User u=new User();
-			u.setId(rs.getInt("id"));
-			u.setCode(rs.getString("code"));
-                        u.setCategory(rs.getString("category"));
-                        u.setProduct_name(rs.getString("product_name"));
-                        u.setQuantity(rs.getString("quantity"));
-                        u.setUnit(rs.getString("unit"));
-                        u.setPer_unit_price(rs.getString("per_unit_price"));
-                        u.setT_Price(rs.getString("total_price"));
-                        u.setDate(rs.getString("date"));
-                       
-			list.add(u);
-		}
-	}catch(Exception e){System.out.println(e);}
-	return list;
-}
+        try {
+            Connection con = getConnection();
+            PreparedStatement ps = con.prepareStatement("select * from sale");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setCode(rs.getString("code"));
+                u.setCategory(rs.getString("category"));
+                u.setProduct_name(rs.getString("product_name"));
+                u.setQuantity(rs.getString("quantity"));
+                u.setUnit(rs.getString("unit"));
+                u.setPer_unit_price(rs.getString("per_unit_price"));
+                u.setT_Price(rs.getString("total_price"));
+                u.setDate(rs.getString("date"));
 
-public static int deleteSale(User u) {
+                list.add(u);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public static int deleteSale(User u) {
         int status = 0;
         try {
             Connection con = getConnection();
@@ -419,29 +443,25 @@ public static int deleteSale(User u) {
         return status;
     }
 
-
-
-
-
-
 ///////for Fetching Supplier Name//////
-public static List<User> getAllRecords(){
-	List<User> list=new ArrayList<User>();
-	
-	try{
-		Connection con=getConnection();
-		PreparedStatement ps=con.prepareStatement("select * from dealership");
-		ResultSet rs=ps.executeQuery();
-		while(rs.next()){
-			User u=new User();
-			u.setId(rs.getInt("id"));
-                        u.setDealer_id(rs.getString("dealer_id"));
-			u.setDealer_name(rs.getString("dealer_name"));
-			list.add(u);
-		}
-	}catch(Exception e){System.out.println(e);}
-	return list;
-}
+    public static List<User> getAllRecords() {
+        List<User> list = new ArrayList<User>();
 
+        try {
+            Connection con = getConnection();
+            PreparedStatement ps = con.prepareStatement("select * from dealership");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setDealer_id(rs.getString("dealer_id"));
+                u.setDealer_name(rs.getString("dealer_name"));
+                list.add(u);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
 
 }

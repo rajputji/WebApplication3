@@ -3,6 +3,12 @@
 <jsp:setProperty property="*" name="u"/>
 
 <%
-UserDao.deletepurchase(u);
-response.sendRedirect("../ProductList.jsp");
+    String msg = null;
+    int i = UserDao.deletepurchase(u);
+    if (i > 0) {
+        msg = "Deleted Succesfully!";
+    } else {
+        msg = "Error! Couldn't Delete!";
+    }
+    response.sendRedirect("../ProductList.jsp?msg="+msg);
 %>

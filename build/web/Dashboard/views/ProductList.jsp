@@ -24,7 +24,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
-    
+
         <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
         <!-- iCheck -->
         <link rel="stylesheet" href="../../plugins/iCheck/flat/blue.css">
@@ -45,8 +45,6 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
         <link rel="stylesheet" href="style.css" type="text/css">
 
     </head>
@@ -96,7 +94,7 @@
 
                                         <p>
                                             <i style="font-size: 18px"><%=session.getAttribute("userid")%></i><br>
-                                           
+
                                         </p>
                                     </li>
 
@@ -208,30 +206,36 @@
                 </li>
             </ul>
 
-                </section>
-                <!-- /.sidebar -->
-            </aside>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
 
-            <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
-                <!-- Content Header (Page header) -->
-                <section class="content-header">
-                    <h1>
-                        Dashboard
-                        <small>Control panel</small>
-                    </h1>
-                    <ol class="breadcrumb">
-                        <li><a href="../../main.jsp"><i class="fa fa-dashboard"></i>Home</a></li>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Dashboard
+                <small>Control panel</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="../../main.jsp"><i class="fa fa-dashboard"></i>Home</a></li>
 
-                    </ol>
-                </section>
+            </ol>
+        </section>
 
         <!-- Main content -->
+        <%
+            if (request.getParameter("msg") != null) {
+                String msg = request.getParameter("msg");
+                out.print("<script>alert('" + msg + "');</script>");
+            }
+        %>
 
         <!-- Small boxes (Stat box) -->
         <div class="container">
             <h2>Product List</h2>
-            <p>Products Exits in the Store</p> 
+            <p>Following Products are available in the Store : </p> 
 
             <%@ page language="java" contentType="text/html; charset=ISO-8859-1" %>
             <%@ page import="java.sql.PreparedStatement"  %>
@@ -239,82 +243,66 @@
             <%@ page import="java.sql.Connection" %>
             <%@ page import="java.sql.DriverManager" %>
             <%!
-            public int nullIntconv(String str)
-            {   
-                int conv=0;
-                if(str==null)
-                {
-                    str="0";
+                public int nullIntconv(String str) {
+                    int conv = 0;
+                    if (str == null) {
+                        str = "0";
+                    } else if ((str.trim()).equals("null")) {
+                        str = "0";
+                    } else if (str.equals("")) {
+                        str = "0";
+                    }
+                    try {
+                        conv = Integer.parseInt(str);
+                    } catch (Exception e) {
+                    }
+                    return conv;
                 }
-                else if((str.trim()).equals("null"))
-                {
-                    str="0";
-                }
-                else if(str.equals(""))
-                {
-                    str="0";
-                }
-                try{
-                    conv=Integer.parseInt(str);
-                }
-                catch(Exception e)
-                {
-                }
-                return conv;
-            }
             %>
             <%
- 
                 Connection conn = null;
                 Class.forName("com.mysql.jdbc.Driver").newInstance();
-                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root", "");
- 
+                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "");
+
                 ResultSet rsPagination = null;
                 ResultSet rsRowCnt = null;
-     
-                PreparedStatement psPagination=null;
-                PreparedStatement psRowCnt=null;
-     
-                int iShowRows=5;  // Number of records show on per page
-                int iTotalSearchRecords=10;  // Number of pages index shown
-     
-                int iTotalRows=nullIntconv(request.getParameter("iTotalRows"));
-                int iTotalPages=nullIntconv(request.getParameter("iTotalPages"));
-                int iPageNo=nullIntconv(request.getParameter("iPageNo"));
-                int cPageNo=nullIntconv(request.getParameter("cPageNo"));
-     
-                int iStartResultNo=0;
-                int iEndResultNo=0;
-     
-                if(iPageNo==0)
-                {
-                    iPageNo=0;
+
+                PreparedStatement psPagination = null;
+                PreparedStatement psRowCnt = null;
+
+                int iShowRows = 10;  // Number of records show on per page
+                int iTotalSearchRecords = 10;  // Number of pages index shown
+
+                int iTotalRows = nullIntconv(request.getParameter("iTotalRows"));
+                int iTotalPages = nullIntconv(request.getParameter("iTotalPages"));
+                int iPageNo = nullIntconv(request.getParameter("iPageNo"));
+                int cPageNo = nullIntconv(request.getParameter("cPageNo"));
+
+                int iStartResultNo = 0;
+                int iEndResultNo = 0;
+
+                if (iPageNo == 0) {
+                    iPageNo = 0;
+                } else {
+                    iPageNo = Math.abs((iPageNo - 1) * iShowRows);
                 }
-                else{
-                    iPageNo=Math.abs((iPageNo-1)*iShowRows);
-                }
-     
- 
-     
-                String sqlPagination="SELECT SQL_CALC_FOUND_ROWS * FROM product limit "+iPageNo+","+iShowRows+"";
- 
-                psPagination=conn.prepareStatement(sqlPagination);
-                rsPagination=psPagination.executeQuery();
-     
+
+                String sqlPagination = "SELECT SQL_CALC_FOUND_ROWS * FROM product limit " + iPageNo + "," + iShowRows + "";
+
+                psPagination = conn.prepareStatement(sqlPagination);
+                rsPagination = psPagination.executeQuery();
+
                 //// this will count total number of rows
-                 String sqlRowCnt="SELECT FOUND_ROWS() as cnt";
-                 psRowCnt=conn.prepareStatement(sqlRowCnt);
-                 rsRowCnt=psRowCnt.executeQuery();
-      
-                 if(rsRowCnt.next())
-                  {
-                     iTotalRows=rsRowCnt.getInt("cnt");
-                  }
+                String sqlRowCnt = "SELECT FOUND_ROWS() as cnt";
+                psRowCnt = conn.prepareStatement(sqlRowCnt);
+                rsRowCnt = psRowCnt.executeQuery();
+
+                if (rsRowCnt.next()) {
+                    iTotalRows = rsRowCnt.getInt("cnt");
+                }
             %>
             <div class="panel panel-primary" style="overflow: auto">
                 <div class="container">
-                    <legend><h2>Product Details</h2></legend>
-
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -322,170 +310,152 @@
                                 <th>Product_ID</th>
                                 <th>Product Name</th>
                                 <th>Category</th>
-                                
-                               
                                 <th>Company Name</th>
                                 <th>Quantity</th>
                                 <th>Unit</th>
                                 <th>Per-Unit-Price</th>
-                               
                                 <th>Action</th>
-
                             </tr>
                         </thead>
                         <tbody>
-
                             <%
-                                int a=1;
-                        while(rsPagination.next())
-                                    {
+                                int a = 1;
+                                while (rsPagination.next()) {
                             %>
                             <tr>
-                                <td><% out.print(a); a++; %></td>
-                                 <td><%=rsPagination.getString("p_id")%></td>
-                                 <td><%=rsPagination.getString("p_name")%></td>
+                                <td><% out.print(a);
+                                    a++;%></td>
+                                <td><%=rsPagination.getString("p_id")%></td>
+                                <td><%=rsPagination.getString("p_name")%></td>
                                 <td><%=rsPagination.getString("p_category")%></td>
-                                
+
                                 <td><%=rsPagination.getString("p_company")%></td>
                                 <td><%=rsPagination.getString("p_quantity")%></td>
                                 <td><%=rsPagination.getString("p_unit")%></td>
                                 <td><%=rsPagination.getString("p_price")%></td>
-                               
+
                                 <td>
                                     <a href="DB/EditPurchase.jsp?id=<%=rsPagination.getInt("id")%>" class="btn btn-success btn-sm btn-icon icon-left" role="button">
                                         <i class="entypo-pencil"></i>
-                                        Edit
+                                        Update
                                     </a>
 
                                     <a href="DB/DelPurchase.jsp?id=<%=rsPagination.getInt("id")%>"  class="btn btn-danger btn-sm btn-icon icon-left" role="button">
                                         <i class="entypo-cancel"></i>
-                                        Delete
+                                        Remove Product
                                     </a>
                                 </td>
                             </tr>
-                        </c:forEach>
+                            </c:forEach>
 
 
-                        <tr>
+                            <tr>
 
-                            <% 
-}
-                            %>
-                            <%
-                              //// calculate next record start record  and end record 
-                                    try{
-                                        if(iTotalRows<(iPageNo+iShowRows))
-                                        {
-                                            iEndResultNo=iTotalRows;
-                                        }
-                                        else
-                                        {
-                                            iEndResultNo=(iPageNo+iShowRows);
-                                        }
-            
-                                        iStartResultNo=(iPageNo+1);
-                                        iTotalPages=((int)(Math.ceil((double)iTotalRows/iShowRows)));
-         
+                                <%
                                     }
-                                    catch(Exception e)
-                                    {
+                                %>
+                                <%
+                                    //// calculate next record start record  and end record 
+                                    try {
+                                        if (iTotalRows < (iPageNo + iShowRows)) {
+                                            iEndResultNo = iTotalRows;
+                                        } else {
+                                            iEndResultNo = (iPageNo + iShowRows);
+                                        }
+
+                                        iStartResultNo = (iPageNo + 1);
+                                        iTotalPages = ((int) (Math.ceil((double) iTotalRows / iShowRows)));
+
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                     }
-                            %>
-                    <div class="container">
-                        <ul class="pagination">
+                                %>
+                        <div class="container">
+                            <ul class="pagination">
 
-                            <%
+                                <%
                                     //// index of pages 
-         
-                                    int i=0;
-                                    int cPage=0;
-                                    if(iTotalRows!=0)
-                                    {
-                                    cPage=((int)(Math.ceil((double)iEndResultNo/(iTotalSearchRecords*iShowRows))));
-         
-                                    int prePageNo=(cPage*iTotalSearchRecords)-((iTotalSearchRecords-1)+iTotalSearchRecords);
-                                    if((cPage*iTotalSearchRecords)-(iTotalSearchRecords)>0)
-                                    {
-                            %>
-                            <li> <a href="ProductList.jsp?iPageNo=<%=prePageNo%>&cPageNo=<%=prePageNo%>"> << Previous</a></li>
-                                <%
-                               }
-         
-                               for(i=((cPage*iTotalSearchRecords)-(iTotalSearchRecords-1));i<=(cPage*iTotalSearchRecords);i++)
-                               {
-                                 if(i==((iPageNo/iShowRows)+1))
-                                 {
+                                    int i = 0;
+                                    int cPage = 0;
+                                    if (iTotalRows != 0) {
+                                        cPage = ((int) (Math.ceil((double) iEndResultNo / (iTotalSearchRecords * iShowRows))));
+
+                                        int prePageNo = (cPage * iTotalSearchRecords) - ((iTotalSearchRecords - 1) + iTotalSearchRecords);
+                                        if ((cPage * iTotalSearchRecords) - (iTotalSearchRecords) > 0) {
                                 %>
-                            <li> <a href="ProductList.jsp?iPageNo=<%=i%>"><b><%=i%></b></a></li>
-                                        <%
+                                <li> <a href="ProductList.jsp?iPageNo=<%=prePageNo%>&cPageNo=<%=prePageNo%>"> << Previous</a></li>
+                                    <%
                                         }
-                                        else if(i<=iTotalPages)
-                                        {
-                                        %>
-                            <li> <a href="ProductList.jsp?iPageNo=<%=i%>"><%=i%></a></li>
-                                <% 
-                                }
-                              }
-                              if(iTotalPages>iTotalSearchRecords && i<iTotalPages)
-                              {
-                                %>
-                            <li>  <a href="ProductList.jsp?iPageNo=<%=i%>&cPageNo=<%=i%>"> >> Next</a> </li>
-                                <%
-                               }
-                               }
-                                %>
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-sm-8" style="background-color:lavender;"><b>Rows <%=iStartResultNo%> - <%=iEndResultNo%>   Total Result  <%=iTotalRows%> </b></div>
+
+                                        for (i = ((cPage * iTotalSearchRecords) - (iTotalSearchRecords - 1)); i <= (cPage * iTotalSearchRecords); i++) {
+                                            if (i == ((iPageNo / iShowRows) + 1)) {
+                                    %>
+                                <li> <a href="ProductList.jsp?iPageNo=<%=i%>"><b><%=i%></b></a></li>
+                                            <%
+                                            } else if (i <= iTotalPages) {
+                                            %>
+                                <li> <a href="ProductList.jsp?iPageNo=<%=i%>"><%=i%></a></li>
+                                    <%
+                                            }
+                                        }
+                                        if (iTotalPages > iTotalSearchRecords && i < iTotalPages) {
+                                    %>
+                                <li>  <a href="ProductList.jsp?iPageNo=<%=i%>&cPageNo=<%=i%>"> >> Next</a> </li>
+                                    <%
+                                            }
+                                        }
+                                    %>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-8" style="background-color:lavender;"><b>Rows <%=iStartResultNo%> - <%=iEndResultNo%>   Total Results :  <%=iTotalRows%> </b></div>
+                                    </div>
                                 </div>
-                            </div>
-                        </ul>
-                    </div>
-                    </tr>
-                    <tr>
-                    <input type="text" class="" id="search" placeholder="Search...">
-                    </tr>
-                    </tbody>
-                </table>
+                            </ul>
+                        </div>
+                        </tr>
+                        <tr>
+                        <input type="text" class="" id="search" placeholder="Search...">
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+            </main>
+
+            <footer></footer>&nbsp;
+            <br>
+            <br>
+            <br>
+
+
         </div>
-        </main>
 
-        <footer></footer>&nbsp;
-        <br>
-        <br>
-        <br>
+        <!-- ./col -->
 
 
+        <!-- /.content -->
     </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
 
-    <!-- ./col -->
+        </div>
 
+    </footer>
 
-    <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
-<footer class="main-footer">
-    <div class="pull-right hidden-xs">
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        </ul>
 
-    </div>
- 
-</footer>
-
-<!-- Control Sidebar -->
-<aside class="control-sidebar control-sidebar-dark">
-    <!-- Create the tabs -->
-    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-        <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-        <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-    </ul>
-
-</aside>
-<!-- /.control-sidebar -->
-<!-- Add the sidebar's background. This div must be placed
-     immediately after the control sidebar -->
-<div class="control-sidebar-bg"></div>
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
 
@@ -526,32 +496,45 @@
 <script src="../../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
+<script type="text/javascript">
+    $("#search").keyup(function () {
+        var value = this.value.toLowerCase().trim();
+
+        $("table tr").each(function (index) {
+            if (!index)
+                return;
+            $(this).find("td").each(function () {
+                var id = $(this).text().toLowerCase().trim();
+                var not_found = (id.indexOf(value) == -1);
+                $(this).closest('tr').toggle(!not_found);
+                return not_found;
+            });
+        });
+    });
+</script>
 </body>
 </html>
-<%
-    try{
-         if(psPagination!=null){
-             psPagination.close();
-         }
-         if(rsPagination!=null){
-             rsPagination.close();
-         }
-          
-         if(psRowCnt!=null){
-             psRowCnt.close();
-         }
-         if(rsRowCnt!=null){
-             rsRowCnt.close();
-         }
-          
-         if(conn!=null){
-          conn.close();
-         }
-    }
-    catch(Exception e)
-    {
-        e.printStackTrace();
-    }
-    
+<%        try {
+            if (psPagination != null) {
+                psPagination.close();
+            }
+            if (rsPagination != null) {
+                rsPagination.close();
+            }
+
+            if (psRowCnt != null) {
+                psRowCnt.close();
+            }
+            if (rsRowCnt != null) {
+                rsRowCnt.close();
+            }
+
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 %>
