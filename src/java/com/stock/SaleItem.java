@@ -1,5 +1,8 @@
 package com.stock;
-public class SaleItem {
+
+import java.io.Serializable;
+
+public class SaleItem implements Serializable{
     String p_id;
     int p_quantity;
 

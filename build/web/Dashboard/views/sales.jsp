@@ -4,7 +4,6 @@
 %>
 
 <%} else {
-
 %>
 
 
@@ -87,9 +86,33 @@
                 }
             }
 
-        </script> 
 
+            var r;
+            function checkMemberID()
+            {
+                var member_id = document.getElementById("member_id").value;
+                var url = "CheckMembership.jsp?member_id=" + member_id;
 
+                if (window.XMLHttpRequest) {
+                    r = new XMLHttpRequest();
+                } else if (window.ActiveXObject) {
+                    r = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                try {
+                    r.onreadystatechange = function () {
+                        if (r.readyState === 4) {
+                            var val = r.responseText;
+                            document.getElementById('memberInfo').innerHTML = val;
+                        }
+                    };
+                    request.open("GET", url, true);
+                    request.send();
+                } catch (e) {
+                    alert("Unable to connect to server");
+                }
+            }
+        </script>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -305,48 +328,48 @@
             <br>
 
 
-            <div class="container">
-                <legend><b>CALCULATOR</b></legend>
-                <form name="Calc" class="form-inline">
-
-                    <table border=6>
-                        <tr>
-                            <td align=right>
-                                <input type="text"   name="Input" size="35"  style=" text-align: justify">
-                                <br>
-                            </td>
-                        </tr>
-                        <td>
-
-                            <input type="button" NAME="one"   VALUE="  1  " OnClick="Calc.Input.value += '1'">
-                            <input type="button" NAME="two"   VALUE="  2  " OnCLick="Calc.Input.value += '2'">
-                            <input type="button" NAME="three" VALUE="  3  " OnClick="Calc.Input.value += '3'">
-                            <input type="button" NAME="times" VALUE="  -  " OnClick="Calc.Input.value += ' - '">
-                            <input type="button" NAME="r_paren" VALUE="  )  " OnClick="Calc.Input.value += ' ) '">
-                            <br>
-
-                            <input type="button" NAME="four"  VALUE="  4  " OnClick="Calc.Input.value += '4'">
-                            <input type="button" NAME="five"  VALUE="  5  " OnCLick="Calc.Input.value += '5'">
-                            <input type="button" NAME="six"   VALUE="  6  " OnClick="Calc.Input.value += '6'">
-                            <input type="button" NAME="minus" VALUE="  X  " OnClick="Calc.Input.value += ' * '">
-                            <input type="button" NAME="l_paren" VALUE="  (  " OnClick="Calc.Input.value += ' ( '">
-                            <br>
-
-                            <input type="button" NAME="seven" VALUE="  7  " OnClick="Calc.Input.value += '7'">
-                            <input type="button" NAME="eight" VALUE="  8  " OnCLick="Calc.Input.value += '8'">
-                            <input type="button" NAME="nine"  VALUE="  9  " OnClick="Calc.Input.value += '9'">
-                            <input type="button" NAME="plus"  VALUE="  /  " OnClick="Calc.Input.value += ' / '">
-                            <input type="button" NAME="clear"VALUE="  C  " OnClick="Calc.Input.value = ''">
-                            <br>
-
-                            <input type="button" NAME="point" STYLE="font-size:110%" VALUE="  .  " OnClick="Calc.Input.value += '.'">
-                            <input type="button" NAME="zero"  VALUE="  0  " OnClick="Calc.Input.value += '0'">
-                            <input type="button" NAME="Equals"  VALUE="  =  " OnClick="Calc.Input.value = eval(Calc.Input.value)">
-                            <input type="button" NAME="div"   VALUE="  +  " OnClick="Calc.Input.value += ' + '">
-                        </td>
-                    </table>
-                </form>
-            </div>
+            <!--            <div class="container">
+                            <legend><b>CALCULATOR</b></legend>
+                            <form name="Calc" class="form-inline">
+            
+                                <table border=6>
+                                    <tr>
+                                        <td align=right>
+                                            <input type="text"   name="Input" size="35"  style=" text-align: justify">
+                                            <br>
+                                        </td>
+                                    </tr>
+                                    <td>
+            
+                                        <input type="button" NAME="one"   VALUE="  1  " OnClick="Calc.Input.value += '1'">
+                                        <input type="button" NAME="two"   VALUE="  2  " OnCLick="Calc.Input.value += '2'">
+                                        <input type="button" NAME="three" VALUE="  3  " OnClick="Calc.Input.value += '3'">
+                                        <input type="button" NAME="times" VALUE="  -  " OnClick="Calc.Input.value += ' - '">
+                                        <input type="button" NAME="r_paren" VALUE="  )  " OnClick="Calc.Input.value += ' ) '">
+                                        <br>
+            
+                                        <input type="button" NAME="four"  VALUE="  4  " OnClick="Calc.Input.value += '4'">
+                                        <input type="button" NAME="five"  VALUE="  5  " OnCLick="Calc.Input.value += '5'">
+                                        <input type="button" NAME="six"   VALUE="  6  " OnClick="Calc.Input.value += '6'">
+                                        <input type="button" NAME="minus" VALUE="  X  " OnClick="Calc.Input.value += ' * '">
+                                        <input type="button" NAME="l_paren" VALUE="  (  " OnClick="Calc.Input.value += ' ( '">
+                                        <br>
+            
+                                        <input type="button" NAME="seven" VALUE="  7  " OnClick="Calc.Input.value += '7'">
+                                        <input type="button" NAME="eight" VALUE="  8  " OnCLick="Calc.Input.value += '8'">
+                                        <input type="button" NAME="nine"  VALUE="  9  " OnClick="Calc.Input.value += '9'">
+                                        <input type="button" NAME="plus"  VALUE="  /  " OnClick="Calc.Input.value += ' / '">
+                                        <input type="button" NAME="clear"VALUE="  C  " OnClick="Calc.Input.value = ''">
+                                        <br>
+            
+                                        <input type="button" NAME="point" STYLE="font-size:110%" VALUE="  .  " OnClick="Calc.Input.value += '.'">
+                                        <input type="button" NAME="zero"  VALUE="  0  " OnClick="Calc.Input.value += '0'">
+                                        <input type="button" NAME="Equals"  VALUE="  =  " OnClick="Calc.Input.value = eval(Calc.Input.value)">
+                                        <input type="button" NAME="div"   VALUE="  +  " OnClick="Calc.Input.value += ' + '">
+                                    </td>
+                                </table>
+                            </form>
+                        </div>-->
 
             <br>
 
@@ -355,17 +378,20 @@
 
 
             <%
+
+                if (request.getParameter("ErrorMsg") != null) {
+            %>
+            <script>
+                alert('<%=request.getParameter("ErrorMsg")%>');
+            </script>
+            <%
+                }
+
                 if (session.getAttribute("c") != null) {
                     ArrayList cart = (ArrayList) session.getAttribute("c");
             %>
             <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
             <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>            
-
-            <%--
-                        <sql:setDataSource var="dbsource" driver="com.mysql.jdbc.Driver"
-                                           url="jdbc:mysql://localhost/inventory"
-                                           user="root"  password=""/>
-            --%>
 
             <%
                 String p_id, p_name, p_category, p_company, p_unit;
@@ -374,12 +400,6 @@
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "");
                 PreparedStatement ps = con.prepareStatement("select * from product where p_id=?");
             %>
-
-            <%--
-            <sql:query dataSource="${dbsource}" var="result">
-                   SELECT * from product where p_id;
-               </sql:query>            
-            --%>
 
 
             <div class="panel panel-primary" style="overflow: auto">
@@ -395,7 +415,7 @@
                             <th>Product Name</th>
                             <th>Quantity</th>
                             <th>Unit</th>
-                            <th>Per<br>Unit<br>Price(TK)</th>
+                            <th>Per<br>Unit<br>Price(Rs)</th>
                             <th>Action</th>
                         </tr>
                         <%
@@ -424,9 +444,9 @@
                             <td><% out.print(p_name); %></td>
                             <td><% out.print(p_quantity); %></td>
                             <td><% out.print(p_unit); %></td>
-                            <td><% out.print(p_price); %></td>
+                            <td><% out.print(p_price);%></td>
                             <td>
-                                <a href="javascript:confirmGo('Sure to delete this record?','edditCart.jsp?id=<c:out value="${p_id}"/>')"  class="btn btn-danger btn-sm btn-icon icon-left" role="button">
+                                <a href="javascript:confirmGo('Sure to delete this record?','editCart.jsp?id=<c:out value="<%=p_id%>"/>')"  class="btn btn-danger btn-sm btn-icon icon-left" role="button">
                                     <i class="entypo-cancel"></i>
                                     Delete
                                 </a>
@@ -470,7 +490,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="btn">
-                                                        <button class="btn btn-vimeo">Add</button>
+                                                        <button class="btn btn-vimeo">Proceed</button>
                                                     </div>
 
                                                 </td>
@@ -483,14 +503,14 @@
                                     </div>
                                 </form>
                             </div>
-                            <form action="Sale_print_member.jsp">
+                            <form action="Sale_print_memberVerify.jsp">
                                 <div id="parentPermission">
                                     <table>
                                         &nbsp;
                                         <tr><td>User ID.:  <input type="text" name="member_id" class="form-control" placeholder="Enter User Id"></td>
                                             <td>
                                                 <div class="btn">
-                                                    <button class="btn btn-vimeo" >Add</button>
+                                                    <button class="btn btn-vimeo" >Proceed</button>
                                                 </div>
 
                                             </td>

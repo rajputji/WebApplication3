@@ -4,6 +4,7 @@
 
 <%
 int i=UserDao.saveMember(u);
+//UserDao.sendMail(u.getEmail());
 if(i>0){
 response.sendRedirect("../MemberShip.jsp");
 }else{

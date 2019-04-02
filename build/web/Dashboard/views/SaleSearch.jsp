@@ -103,7 +103,7 @@
                             <td>
                                 <div class="form-group">
                                     <label for="p_quantity">Quantity:</label><br>
-                                    <input type="text" name="p_quantity"  class="form-control" id="p_quantity" placeholder="Enter Quantity" required="You have to enter some valueS">
+                                    <input type="number" name="p_quantity"  class="form-control" id="p_quantity" placeholder="Enter Quantity" required="You have to enter some value">
                                 </div><br>
                             </td>
                         </tr>

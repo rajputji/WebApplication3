@@ -13,7 +13,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Inventory System</title>
+        <title>Stock Management System</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.6 -->
@@ -78,7 +78,7 @@
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img src="../Image/logo.png" class="user-image" alt="User Image">
-                                    <span class="hidden-xs"> Optimus Prime</span>
+                                    <span class="hidden-xs">Grocery Shop</span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
@@ -86,8 +86,7 @@
                                         <img src="../Image/logo.png" class="img-circle" alt="User Image">
 
                                         <p>
-                                            Optimus Prime - Web Developer
-                                            <small>Member since 2016</small>
+                                           
                                         </p>
                                     </li>
 
@@ -118,7 +117,7 @@
                             <img src="../Image/logo.png" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
-                            <p>Optimus Prime</p>
+                            <p>Grocery Shop</p>
 
                         </div>
                     </div>

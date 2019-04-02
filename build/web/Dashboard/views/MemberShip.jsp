@@ -56,6 +56,26 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <script>
+        function fill(v){
+           
+            //v=document.getElementById('sell').value;
+                    // alert(v.value);
+          if(v===null)
+             alert("please select one field!");
+           else if(v.value==="p")
+           {
+               //alert("ghusa");
+            document.getElementById('abc').value="700";
+        }
+            else if(v.value==='s')
+           
+           document.getElementById('abc').value="800";
+            else if(v.value==='g')
+           document.getElementById('abc').value="1500";
+        }
+       
+    </script>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -296,23 +316,24 @@
                                 
                            </tr>
                             <tr> 
-                                <td>
-
-                                    <div class="form-group">
-                                        <label for="mobile">Payment Amount(TK)</label><br>
-                                        <input type="text" name="payment" class="form-control" id="mobile" placeholder="Enter Payment" required>
-                                    </div><br>
-                                </td>
+                               
                                 <td>
 
                                     <label for="">Category</label><br>
-                                    <select class="form-control" name="category" id="sel1">
-                                        <option>Select</option>
-                                        <option>Premium</option>
-                                        <option>Sliver</option>
-                                        <option>Gold</option>
+                                    <select onchange="fill(this)" class="form-control" name="category" id="sel1">
+                                        <option value="null">Select</option>
+                                        <option value="p"> Premium</option>
+                                        <option value="s">Silver</option>
+                                        <option value="g">Gold</option>
                                     </select>
                                     <br>  
+                                </td>
+                                 <td>
+
+                                    <div class="form-group">
+                                        <label for="abc">Payment Amount</label><br>
+                                        <input type="text" readonly="" name="payment" class="form-control" placeholder="Enter Payment" id="abc" required>
+                                    </div><br>
                                 </td>
                                 <td>
                                     <div class="form-group">

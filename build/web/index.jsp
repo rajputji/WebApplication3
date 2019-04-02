@@ -31,42 +31,49 @@
                 <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
                 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-
+<!-- Compiled and minified CSS -->
+    
 
     </head>
-    <body class="page-body login-page login-form-fall" data-url="http://neon.dev">
+    <body class=" page-body login-page login-form-fall" data-url="http://neon.dev" style="background-color: #021014;">
 
 
         <!-- This is needed when you send requests via Ajax-->
         <script type="text/javascript">
             var baseurl = '';
         </script>
+        <br/>
+        <div style="">
+            <center>
+                <h1 style="color:white;margin-top:100px;font-size:500%;">Grocery Shop</h1>
+            </center>
+        </div>
 
         <div class="login-container">
 
-            <div class="login-header login-caret">
+<!--            <div class="login-header login-caret">
 
                 <div class="login-content">
 
                     <a href="#" class="logo">
-                        <img src="Image/logo.png" width="170" height="150" alt="" class="img-circle" > <!-- id="form_login"-->                    </a>
+                        <img src="Image/logo.png" width="170" height="150" alt="" class="img-circle" >  id="form_login"                    </a>
 
                     <p class="description">Dear user, log in to access!</p>
 
-                    <!-- progress bar indicator -->
+                     progress bar indicator 
                     <div class="login-progressbar-indicator">
                         <h3>43%</h3>
                         <span>logging in...</span>
                     </div>
                 </div>
 
-            </div>
+            </div>-->
 
-            <div class="login-progressbar">
-                <div></div>
-            </div>
+<!--            <div class="login-progressbar">
+              
+            </div>-->
 
-            <div class="login-form">
+            <div class="login-form" style="margin-top:100px;background-color:rgba(0,0,0,0.3);width:400px;margin-left: 470px;">
 
                 <div class="login-content">
 
@@ -137,16 +144,7 @@
 
                     </form>
 
-
-                    <div class="login-bottom-links">
-
-                     
-
-                        <br />
-
-                        <a href="#">ToS</a>  - <a href="#">Privacy Policy</a>
-
-                    </div>
+ 
 
                 </div>
 

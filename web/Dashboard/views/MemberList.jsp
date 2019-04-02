@@ -279,7 +279,7 @@
                             PreparedStatement psRowCnt=null;
      
                             int iShowRows=10;  // Number of records show on per page
-                            int iTotalSearchRecords=10;  // Number of pages index shown
+                            int iTotalSearchRecords=10  ;  // Number of pages index shown
      
                             int iTotalRows=nullIntconv(request.getParameter("iTotalRows"));
                             int iTotalPages=nullIntconv(request.getParameter("iTotalPages"));
@@ -484,7 +484,7 @@
                 <div class="pull-right hidden-xs">
 
                 </div>
-                <strong>Copyright &copy; 2016-2017 <a href="#">Grocery Shop</a>.</strong> The Group Of Friends
+                
             </footer>
 
             <!-- Control Sidebar -->
